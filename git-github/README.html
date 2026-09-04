@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git & GitHub — Complete Student Guide</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.65;
+      color: #1f2937;
+      background: #f6f7f9;
+    }
+    .container { max-width: 1100px; margin: auto; padding: 32px 22px 70px; }
+    header {
+      background: #111827;
+      color: white;
+      padding: 38px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+    }
+    h1 { margin: 0 0 8px; font-size: 36px; }
+    h2 { margin-top: 42px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+    h3 { margin-top: 28px; }
+    .subtitle { color: #d1d5db; font-size: 18px; }
+    .box, .step, .warning, .tip, .exercise {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin: 16px 0;
+    }
+    .warning { border-left: 5px solid #dc2626; }
+    .tip { border-left: 5px solid #2563eb; }
+    .exercise { border-left: 5px solid #059669; }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code {
+      background: #eef2f7;
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+    pre code { background: transparent; padding: 0; }
+    table { width: 100%; border-collapse: collapse; background: white; margin: 16px 0; }
+    th, td { border: 1px solid #e5e7eb; padding: 11px; text-align: left; vertical-align: top; }
+    th { background: #f3f4f6; }
+    .flow {
+      font-weight: bold;
+      background: #eef2ff;
+      padding: 16px;
+      border-radius: 10px;
+    }
+    .small { color: #6b7280; font-size: 14px; }
+    ul, ol { padding-left: 25px; }
+    a { color: #2563eb; }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <h1>Git & GitHub — Complete Student Guide</h1>
+  <div class="subtitle">Learn version control from the first command to real team collaboration.</div>
+  <p>This guide is designed to be used during practical teaching. Each important concept includes what it means, when to use it, commands, a step-by-step case, and a practice task.</p>
+</header>
+
+<div class="tip">
+  <strong>How to use this guide:</strong> Do not only read the commands. Open a terminal, create a small practice project, and run the commands yourself. Git becomes easy when you understand what changes after every command.
+</div>
+
+<h2>1. What is Git?</h2>
+<p><strong>Git</strong> is a version control system. It records changes made to files so that developers can track work, create versions, work on separate features, and recover previous states.</p>
+
+<h3>Why do we need Git?</h3>
+<ul>
+  <li>Track changes in a project.</li>
+  <li>Know who changed something and when.</li>
+  <li>Save working versions of a project.</li>
+  <li>Work on features without disturbing the main code.</li>
+  <li>Combine work from multiple developers.</li>
+  <li>Recover from mistakes.</li>
+</ul>
+
+<div class="box">
+  <strong>Real-life example:</strong> Imagine writing an assignment and saving it as
+  <code>assignment-final.docx</code>, <code>assignment-final-2.docx</code>,
+  <code>assignment-final-real.docx</code>. Git solves this version-management problem properly.
+</div>
+
+<h2>2. What is GitHub?</h2>
+<p><strong>GitHub</strong> is a platform for hosting Git repositories online. It adds collaboration and project-management features around Git.</p>
+
+<table>
+<tr><th>Git</th><th>GitHub</th></tr>
+<tr><td>Software installed on your computer.</td><td>Online platform for repositories and collaboration.</td></tr>
+<tr><td>Tracks project history locally.</td><td>Stores and shares repositories remotely.</td></tr>
+<tr><td>Works without internet for most local operations.</td><td>Used to collaborate, review, share, and host code online.</td></tr>
+</table>
+
+<div class="flow">Local Project → Git Repository → GitHub Remote Repository → Team Collaboration</div>
+
+<h2>3. Install and Verify Git</h2>
+
+<pre><code>git --version</code></pre>
+
+<p>If Git is installed, the command displays the installed Git version.</p>
+
+<div class="box">
+  <strong>Practice:</strong> Run <code>git --version</code> and note the version shown on your computer.
+</div>
+
+<h2>4. First-Time Git Configuration</h2>
+
+<p>Git uses your name and email when creating commits.</p>
+
+<pre><code>git config --global user.name "Your Name"
+git config --global user.email "you@example.com"</code></pre>
+
+<h3>Check the configuration</h3>
+<pre><code>git config --global --list</code></pre>
+
+<div class="warning">
+  <strong>Important:</strong> The email used for Git commits should be configured thoughtfully. If you want GitHub to associate commits with your GitHub account, use an email configured for that account or the appropriate GitHub-provided no-reply address.
+</div>
+
+<h2>5. Git Repository — What is it?</h2>
+<p>A Git repository is a project whose history is managed by Git. When you run <code>git init</code>, Git creates a hidden <code>.git</code> directory containing repository information.</p>
+
+<h2>6. Case 1 — Start Git in an Existing Project</h2>
+<p><strong>Use this when:</strong> You already have a project on your computer and want to start tracking it with Git.</p>
+
+<h3>Step 1 — Open the project</h3>
+<pre><code>cd path/to/my-project</code></pre>
+
+<h3>Step 2 — Initialize Git</h3>
+<pre><code>git init</code></pre>
+
+<h3>Step 3 — Check status</h3>
+<pre><code>git status</code></pre>
+
+<h3>Step 4 — Stage files</h3>
+<pre><code>git add .</code></pre>
+
+<h3>Step 5 — Create the first commit</h3>
+<pre><code>git commit -m "Initial commit"</code></pre>
+
+<div class="flow">Working Directory → git add → Staging Area → git commit → Git Repository</div>
+
+<h2>7. The Three Important Areas in Git</h2>
+
+<table>
+<tr><th>Area</th><th>Meaning</th><th>Common command</th></tr>
+<tr><td>Working Directory</td><td>Your actual project files.</td><td>Edit files</td></tr>
+<tr><td>Staging Area</td><td>Changes selected for the next commit.</td><td><code>git add</code></td></tr>
+<tr><td>Repository</td><td>Committed project history.</td><td><code>git commit</code></td></tr>
+</table>
+
+<div class="box">
+  <strong>Easy memory rule:</strong><br>
+  Edit → <code>git add</code> → <code>git commit</code>
+</div>
+
+<h2>8. Essential Daily Commands</h2>
+
+<table>
+<tr><th>Command</th><th>Purpose</th></tr>
+<tr><td><code>git status</code></td><td>See changed, staged, and untracked files.</td></tr>
+<tr><td><code>git add file</code></td><td>Stage one file.</td></tr>
+<tr><td><code>git add .</code></td><td>Stage changes under the current directory.</td></tr>
+<tr><td><code>git commit -m "message"</code></td><td>Create a commit.</td></tr>
+<tr><td><code>git log</code></td><td>View commit history.</td></tr>
+<tr><td><code>git diff</code></td><td>See unstaged changes.</td></tr>
+<tr><td><code>git diff --staged</code></td><td>See staged changes.</td></tr>
+</table>
+
+<h2>9. Case 2 — Make a Change and Commit It</h2>
+
+<ol>
+  <li>Edit a file.</li>
+  <li>Run <code>git status</code>.</li>
+  <li>Review the change with <code>git diff</code>.</li>
+  <li>Stage the file.</li>
+  <li>Review the staged change.</li>
+  <li>Commit it.</li>
+</ol>
+
+<pre><code>git status
+git diff
+git add index.html
+git diff --staged
+git commit -m "Update homepage"</code></pre>
+
+<div class="exercise">
+  <strong>Practice:</strong> Create <code>index.html</code>, commit it, modify the heading, and create a second commit.
+</div>
+
+<h2>10. Commit Messages</h2>
+<p>A commit should describe the change clearly.</p>
+
+<p>Good examples:</p>
+<pre><code>git commit -m "Add login form"
+git commit -m "Fix navbar spacing"
+git commit -m "Add responsive product cards"</code></pre>
+
+<p>Avoid messages such as:</p>
+<pre><code>git commit -m "changes"
+git commit -m "update"
+git commit -m "final"</code></pre>
+
+<h2>11. Case 3 — Create a GitHub Repository and Push an Existing Project</h2>
+<p><strong>Use this when:</strong> your project exists locally and you now want to publish it to GitHub.</p>
+
+<h3>Step 1 — Create an empty repository on GitHub</h3>
+<p>Create the repository on GitHub. If your local project already has its own commits, it is simplest for beginners to create the remote repository without adding an unrelated initial README or other starter files.</p>
+
+<h3>Step 2 — Connect the local repository to GitHub</h3>
+<pre><code>git remote add origin https://github.com/USERNAME/REPOSITORY.git</code></pre>
+
+<h3>Step 3 — Check the remote</h3>
+<pre><code>git remote -v</code></pre>
+
+<h3>Step 4 — Push the branch</h3>
+<pre><code>git branch -M main
+git push -u origin main</code></pre>
+
+<div class="flow">Local Repository → origin → GitHub Repository</div>
+
+<div class="warning">
+  <strong>Do not upload secrets.</strong> Never commit passwords, API keys, private keys, database credentials, <code>.env</code> files containing secrets, or other sensitive credentials.
+</div>
+
+<h2>12. .gitignore</h2>
+<p><code>.gitignore</code> tells Git which files or folders should normally not be tracked.</p>
+
+<p>Example for a Node.js project:</p>
+<pre><code>node_modules/
+.env
+.next/
+dist/
+build/
+coverage/
+.DS_Store</code></pre>
+
+<p>After creating or changing <code>.gitignore</code>:</p>
+<pre><code>git status</code></pre>
+
+<div class="warning">
+  <strong>Important:</strong> <code>.gitignore</code> does not automatically remove a file that Git is already tracking. If a secret was already committed, simply adding it to <code>.gitignore</code> is not enough; the secret may still exist in Git history and may need proper credential rotation and history cleanup.
+</div>
+
+<h2>13. Clone — Get an Existing Repository</h2>
+<p><strong>Use this when:</strong> the project already exists on GitHub and you want a local copy.</p>
+
+<pre><code>git clone https://github.com/USERNAME/REPOSITORY.git
+cd REPOSITORY</code></pre>
+
+<p>Cloning normally creates the local repository, working files, and a remote named <code>origin</code>.</p>
+
+<h2>14. Case 4 — Start Working on an Existing Team Project</h2>
+
+<pre><code>git clone https://github.com/COMPANY/PROJECT.git
+cd PROJECT
+git status
+git branch
+git remote -v</code></pre>
+
+<p>Before starting new work, update your local branch as appropriate for the team's workflow.</p>
+
+<pre><code>git pull</code></pre>
+
+<h2>15. Branches</h2>
+<p>A branch gives you a separate line of development. Branches are commonly used for features, bug fixes, experiments, and other focused work.</p>
+
+<h3>See branches</h3>
+<pre><code>git branch</code></pre>
+
+<h3>Create a branch</h3>
+<pre><code>git switch -c feature-login</code></pre>
+
+<h3>Switch branches</h3>
+<pre><code>git switch main
+git switch feature-login</code></pre>
+
+<h3>Delete a merged local branch</h3>
+<pre><code>git branch -d feature-login</code></pre>
+
+<div class="tip">
+  <strong>Recommended beginner habit:</strong> Keep <code>main</code> stable and create a separate branch for new work.
+</div>
+
+<h2>16. Case 5 — Feature Branch Workflow</h2>
+
+<p>Suppose the team asks you to add a login page.</p>
+
+<pre><code>git switch main
+git pull
+git switch -c feature/login-page</code></pre>
+
+<p>Now develop the feature.</p>
+
+<pre><code>git status
+git add .
+git commit -m "Add login page"</code></pre>
+
+<p>Publish the branch:</p>
+
+<pre><code>git push -u origin feature/login-page</code></pre>
+
+<p>Then open a Pull Request on GitHub for review.</p>
+
+<div class="flow">main → feature/login-page → commit → push → Pull Request → review → merge</div>
+
+<h2>17. Remote Repositories</h2>
+
+<p>A remote is a saved name for another Git repository, commonly a GitHub repository.</p>
+
+<pre><code>git remote -v
+git remote add origin URL
+git remote remove origin
+git remote rename origin upstream</code></pre>
+
+<p><strong>origin</strong> is only a conventional name. It is not a special Git keyword; it is simply the default name commonly assigned to the repository you cloned from or added as the primary remote.</p>
+
+<h2>18. Fetch vs Pull</h2>
+
+<h3>git fetch</h3>
+<p>Downloads information from a remote repository without integrating those changes into your current branch.</p>
+
+<pre><code>git fetch origin</code></pre>
+
+<h3>git pull</h3>
+<p>Fetches remote changes and then integrates them according to the configured pull behavior.</p>
+
+<pre><code>git pull</code></pre>
+
+<div class="box">
+  <strong>Easy rule:</strong> Fetch = bring remote information down and inspect it. Pull = fetch + integrate.
+</div>
+
+<h2>19. Case 6 — Your Teammate Pushed Changes</h2>
+
+<p>If your teammate pushed changes to the shared branch and you need those changes:</p>
+
+<pre><code>git switch main
+git pull</code></pre>
+
+<p>If you have local uncommitted work, check your status first. Do not blindly pull when your working tree contains important unfinished changes.</p>
+
+<h2>20. Push</h2>
+<p><code>git push</code> sends commits from your local repository to a remote repository.</p>
+
+<pre><code>git push
+git push origin main
+git push -u origin feature/login-page</code></pre>
+
+<p>The <code>-u</code> option sets the upstream relationship for the branch, making later <code>git push</code> and <code>git pull</code> more convenient.</p>
+
+<h2>21. Merge</h2>
+<p>Merge combines the history of one branch into another branch.</p>
+
+<h3>Case 7 — Merge a Feature into Main</h3>
+
+<pre><code>git switch main
+git pull
+git merge feature/login-page</code></pre>
+
+<p>If everything is correct:</p>
+
+<pre><code>git push origin main</code></pre>
+
+<div class="warning">
+  In a team using Pull Requests, do not bypass the team's review process by directly merging locally unless that is the agreed workflow.
+</div>
+
+<h2>22. Merge Conflicts</h2>
+<p>A conflict happens when Git cannot automatically decide how to combine changes, often because different branches changed overlapping parts of a file.</p>
+
+<p>Git marks the conflict in the file using markers such as:</p>
+
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+your version
+=======
+other branch version
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/login-page</code></pre>
+
+<h3>Case 8 — Resolve a Merge Conflict</h3>
+
+<ol>
+  <li>Run the merge.</li>
+  <li>Run <code>git status</code> to see conflicted files.</li>
+  <li>Open each conflicted file.</li>
+  <li>Decide what the final code should be.</li>
+  <li>Remove the conflict markers.</li>
+  <li>Save the file.</li>
+  <li>Stage the resolved file.</li>
+  <li>Complete the merge commit if Git requires it.</li>
+</ol>
+
+<pre><code>git status
+git add conflicted-file.html
+git commit</code></pre>
+
+<div class="tip">
+  Never resolve a conflict by blindly choosing one side. Read both changes and confirm what the final application should do.
+</div>
+
+<h2>23. Rebase</h2>
+<p>Rebase re-applies commits on top of another base commit. It can create a cleaner, more linear project history, but it rewrites commit history.</p>
+
+<h3>Example</h3>
+<pre><code>git switch feature/login-page
+git fetch origin
+git rebase origin/main</code></pre>
+
+<p>If conflicts occur, resolve them and then:</p>
+
+<pre><code>git add conflicted-file
+git rebase --continue</code></pre>
+
+<p>To cancel the rebase:</p>
+
+<pre><code>git rebase --abort</code></pre>
+
+<div class="warning">
+  <strong>Important rule:</strong> Be careful rebasing commits that other people are already using. Rewriting shared history can cause confusion and may require a force push.
+</div>
+
+<h2>24. Merge vs Rebase</h2>
+
+<table>
+<tr><th>Merge</th><th>Rebase</th></tr>
+<tr><td>Combines histories.</td><td>Re-applies commits on a new base.</td></tr>
+<tr><td>Does not rewrite existing commits in the same way.</td><td>Rewrites commit history for the rebased commits.</td></tr>
+<tr><td>Often easier for beginners.</td><td>Useful when a team understands history rewriting.</td></tr>
+</table>
+
+<h2>25. Undoing Changes — Understand the Difference</h2>
+
+<p>Git has several commands for undoing work. They are not interchangeable.</p>
+
+<table>
+<tr><th>Command</th><th>Main purpose</th></tr>
+<tr><td><code>git restore</code></td><td>Restore files in the working tree or staging area.</td></tr>
+<tr><td><code>git reset</code></td><td>Move the branch/HEAD or adjust the staging area depending on options.</td></tr>
+<tr><td><code>git revert</code></td><td>Create a new commit that reverses an earlier commit.</td></tr>
+</table>
+
+<h2>26. Case 9 — Discard an Uncommitted File Change</h2>
+
+<p>If you changed a file but want to discard the working-tree change:</p>
+
+<pre><code>git restore filename.html</code></pre>
+
+<div class="warning">
+  This can permanently discard your uncommitted changes to that file. Check <code>git diff</code> before using it if the work matters.
+</div>
+
+<h2>27. Case 10 — Unstage a File</h2>
+
+<p>If you ran <code>git add</code> but do not want the file included in the next commit:</p>
+
+<pre><code>git restore --staged filename.html</code></pre>
+
+<p>This removes the file from the staging area but keeps your working-tree changes.</p>
+
+<h2>28. Case 11 — Undo a Commit Safely on a Shared Branch</h2>
+
+<p>If a commit has already been shared and you want to reverse its effect:</p>
+
+<pre><code>git revert COMMIT_ID</code></pre>
+
+<p>Git creates a new commit that reverses the selected commit.</p>
+
+<div class="tip">
+  For shared history, <code>git revert</code> is generally safer than rewriting history.
+</div>
+
+<h2>29. Reset</h2>
+
+<p><code>git reset</code> can move the current branch to another commit and can also affect the staging area depending on the mode.</p>
+
+<h3>Common forms</h3>
+
+<pre><code>git reset --soft HEAD~1
+git reset --mixed HEAD~1
+git reset --hard HEAD~1</code></pre>
+
+<table>
+<tr><th>Mode</th><th>Basic idea</th></tr>
+<tr><td><code>--soft</code></td><td>Move HEAD; changes remain staged.</td></tr>
+<tr><td><code>--mixed</code></td><td>Move HEAD and unstage changes; working files remain changed.</td></tr>
+<tr><td><code>--hard</code></td><td>Move HEAD and make working files/index match it; can destroy uncommitted work.</td></tr>
+</table>
+
+<div class="warning">
+  <strong>Danger:</strong> Do not teach <code>git reset --hard</code> as a casual undo command. It can destroy uncommitted work.
+</div>
+
+<h2>30. Stash</h2>
+<p>Stash temporarily stores uncommitted changes so that you can work on another task without committing unfinished work.</p>
+
+<h3>Case 12 — You Must Switch Tasks Suddenly</h3>
+
+<pre><code>git status
+git stash push -m "WIP login form"
+git switch bugfix/navbar
+</code></pre>
+
+<p>Later:</p>
+
+<pre><code>git switch feature/login-page
+git stash list
+git stash pop</code></pre>
+
+<p>Useful commands:</p>
+
+<pre><code>git stash list
+git stash show
+git stash pop
+git stash apply
+git stash drop</code></pre>
+
+<h2>31. Viewing History</h2>
+
+<pre><code>git log
+git log --oneline
+git log --oneline --graph --decorate --all
+git show COMMIT_ID</code></pre>
+
+<p>The graph form is particularly useful when learning branches and merges.</p>
+
+<h2>32. Case 13 — Find Out What Changed</h2>
+
+<pre><code>git status
+git diff
+git diff --staged
+git log --oneline
+git show COMMIT_ID</code></pre>
+
+<div class="box">
+  <strong>Debugging habit:</strong> When something looks wrong, do not immediately change more files. First inspect <code>git status</code>, <code>git diff</code>, and recent commits.
+</div>
+
+<h2>33. Tags</h2>
+<p>Tags give meaningful names to specific points in Git history, commonly releases.</p>
+
+<pre><code>git tag v1.0.0
+git tag
+git show v1.0.0</code></pre>
+
+<p>Push a tag:</p>
+<pre><code>git push origin v1.0.0</code></pre>
+
+<p>Push all tags:</p>
+<pre><code>git push origin --tags</code></pre>
+
+<h2>34. GitHub Pull Requests</h2>
+<p>A Pull Request (PR) is a GitHub collaboration mechanism for proposing changes from one branch into another branch.</p>
+
+<p>Typical flow:</p>
+
+<div class="flow">Create branch → Make changes → Commit → Push branch → Open PR → Review → Fix comments → Merge</div>
+
+<h3>What should a good PR contain?</h3>
+<ul>
+  <li>A clear title.</li>
+  <li>A short explanation of what changed.</li>
+  <li>Why the change was needed.</li>
+  <li>Testing information.</li>
+  <li>Screenshots for UI changes when useful.</li>
+  <li>Small, focused changes rather than unrelated work.</li>
+</ul>
+
+<h2>35. Case 14 — Pull Request Workflow</h2>
+
+<pre><code>git switch main
+git pull
+git switch -c feature/product-card
+
+# edit files
+
+git status
+git add .
+git commit -m "Add product card"
+git push -u origin feature/product-card</code></pre>
+
+<p>Now create a Pull Request on GitHub from <code>feature/product-card</code> into the project's target branch.</p>
+
+<p>After review, fix requested changes:</p>
+
+<pre><code># edit files
+git add .
+git commit -m "Address product card review"
+git push</code></pre>
+
+<h2>36. Fork vs Clone</h2>
+
+<table>
+<tr><th>Fork</th><th>Clone</th></tr>
+<tr><td>Creates your own GitHub-side copy of another repository.</td><td>Creates a local copy on your computer.</td></tr>
+<tr><td>Useful when you do not have write access to the original repository.</td><td>Used whenever you want to work with a remote repository locally.</td></tr>
+</table>
+
+<h2>37. Case 15 — Contribute to a Repository You Cannot Directly Write To</h2>
+
+<ol>
+  <li>Fork the repository on GitHub.</li>
+  <li>Clone your fork.</li>
+  <li>Create a feature branch.</li>
+  <li>Make and commit your changes.</li>
+  <li>Push the branch to your fork.</li>
+  <li>Open a Pull Request from your fork to the original repository.</li>
+</ol>
+
+<pre><code>git clone https://github.com/YOUR-USERNAME/PROJECT.git
+cd PROJECT
+git switch -c feature/my-change
+
+# edit files
+
+git add .
+git commit -m "Add my change"
+git push -u origin feature/my-change</code></pre>
+
+<h2>38. Upstream Remote for Forks</h2>
+
+<p>When working from a fork, teams commonly name the original repository <code>upstream</code> and your fork <code>origin</code>.</p>
+
+<pre><code>git remote add upstream https://github.com/ORIGINAL-OWNER/PROJECT.git
+git remote -v</code></pre>
+
+<p>Update information from the original project:</p>
+
+<pre><code>git fetch upstream</code></pre>
+
+<p>Then integrate the desired upstream branch according to the project's workflow.</p>
+
+<h2>39. GitHub Issues</h2>
+<p>Issues can be used to track bugs, tasks, feature requests, questions, and project work.</p>
+
+<p>A useful issue should explain:</p>
+<ul>
+  <li>What is wrong or what is needed.</li>
+  <li>Steps to reproduce a bug when applicable.</li>
+  <li>Expected behavior.</li>
+  <li>Actual behavior.</li>
+  <li>Relevant screenshots, logs, or environment details.</li>
+</ul>
+
+<h2>40. README.md</h2>
+<p>Most GitHub projects have a <code>README.md</code> file that explains the project.</p>
+
+<p>A useful README commonly contains:</p>
+<ul>
+  <li>Project name</li>
+  <li>Description</li>
+  <li>Features</li>
+  <li>Requirements</li>
+  <li>Installation steps</li>
+  <li>How to run the project</li>
+  <li>How to test it</li>
+  <li>Environment variable setup</li>
+  <li>Project structure</li>
+  <li>Contribution instructions</li>
+</ul>
+
+<h2>41. GitHub Actions — Basic Awareness</h2>
+<p>GitHub Actions can automate tasks such as testing, linting, building, and deployment when repository events occur.</p>
+
+<p>A workflow is commonly stored under:</p>
+
+<pre><code>.github/workflows/</code></pre>
+
+<p>Example situations:</p>
+<ul>
+  <li>Run tests whenever a Pull Request is opened.</li>
+  <li>Run linting on every push.</li>
+  <li>Build an application before deployment.</li>
+  <li>Deploy after changes are merged.</li>
+</ul>
+
+<div class="box">
+  <strong>For beginners:</strong> Understand what CI/CD is and recognize the <code>.github/workflows</code> folder before trying to write complex workflows.
+</div>
+
+<h2>42. Git Aliases</h2>
+<p>Aliases create shortcuts for frequently used commands.</p>
+
+<pre><code>git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.lg "log --oneline --graph --decorate --all"</code></pre>
+
+<p>Then:</p>
+
+<pre><code>git st
+git br
+git lg</code></pre>
+
+<h2>43. Case 16 — Accidentally Committed the Wrong File</h2>
+
+<p>First, inspect the commit:</p>
+
+<pre><code>git show --stat
+git status</code></pre>
+
+<p>If the commit has already been pushed to a shared repository, do not casually rewrite history. Decide whether the file should be removed in a new commit or whether the repository's history must be cleaned using an agreed procedure.</p>
+
+<div class="warning">
+  If the accidentally committed file contains a secret, assume the secret is compromised: revoke/rotate the credential first. Removing the file from the latest commit does not automatically make the secret safe.
+</div>
+
+<h2>44. Case 17 — Accidentally Changed the Wrong Branch</h2>
+
+<p>If you have uncommitted work and realize you are on the wrong branch, stop before making more changes.</p>
+
+<ol>
+  <li>Run <code>git status</code>.</li>
+  <li>Decide whether the changes should be committed, stashed, or otherwise moved.</li>
+  <li>Move to the correct branch.</li>
+  <li>Bring the work over using the appropriate method.</li>
+</ol>
+
+<p>For already committed work, <code>git cherry-pick</code> can copy a specific commit onto another branch:</p>
+
+<pre><code>git switch correct-branch
+git cherry-pick COMMIT_ID</code></pre>
+
+<h2>45. Cherry-Pick</h2>
+<p><code>git cherry-pick</code> applies the changes introduced by selected commits to the current branch.</p>
+
+<p><strong>Use case:</strong> A bug fix exists on another branch and you need that specific commit on your release branch.</p>
+
+<pre><code>git switch release
+git cherry-pick COMMIT_ID</code></pre>
+
+<div class="warning">
+  Cherry-pick can create conflicts and duplicate changes if used carelessly. Use it when you specifically need selected commits, not as a replacement for understanding branch integration.
+</div>
+
+<h2>46. Detached HEAD</h2>
+<p>Normally, HEAD points to the currently checked-out branch. In a detached HEAD state, you are directly viewing a commit (or another reference) rather than being on a normal branch.</p>
+
+<pre><code>git status</code></pre>
+
+<p>If you made useful commits while detached, create a branch so the commits remain easy to find:</p>
+
+<pre><code>git switch -c recovery-branch</code></pre>
+
+<div class="tip">
+  <strong>Recovery rule:</strong> If Git says you are in a detached HEAD state, do not panic. Check the commit you are on and create a branch if you need to keep your work.
+</div>
+
+<h2>47. Submodules — Basic Awareness</h2>
+<p>A Git submodule lets one Git repository include another Git repository at a specific commit.</p>
+
+<p>Common commands:</p>
+
+<pre><code>git submodule add https://github.com/OWNER/DEPENDENCY.git path/to/dependency
+git submodule update --init --recursive
+git submodule status</code></pre>
+
+<div class="warning">
+  A submodule is not simply a normal folder copied into the parent repository. The parent repository records a specific commit of the child repository.
+</div>
+
+<h2>48. Line Endings and Cross-Platform Work</h2>
+<p>Developers on Windows, macOS, and Linux can encounter line-ending differences. Git has configuration options to help manage them.</p>
+
+<p>For example, check:</p>
+
+<pre><code>git config --get core.autocrlf</code></pre>
+
+<p>For team projects, follow the repository's existing configuration and contribution guidelines rather than changing line-ending settings randomly.</p>
+
+<h2>49. Git Status as Your Safety Check</h2>
+<p>Make <code>git status</code> a habit before important operations.</p>
+
+<pre><code>git status</code></pre>
+
+<p>Especially run it before:</p>
+<ul>
+  <li>Switching branches.</li>
+  <li>Pulling.</li>
+  <li>Merging.</li>
+  <li>Rebasing.</li>
+  <li>Resetting.</li>
+  <li>Deleting branches.</li>
+  <li>Creating a Pull Request.</li>
+</ul>
+
+<h2>50. A Practical Daily Developer Workflow</h2>
+
+<pre><code>git switch main
+git pull
+
+git switch -c feature/my-feature
+
+# write code
+
+git status
+git diff
+
+git add .
+git diff --staged
+
+git commit -m "Add my feature"
+
+git push -u origin feature/my-feature</code></pre>
+
+<p>Then create a Pull Request and follow the team's review process.</p>
+
+<h2>51. Common Mistakes Students Make</h2>
+
+<table>
+<tr><th>Mistake</th><th>Better habit</th></tr>
+<tr><td>Using <code>git add .</code> without checking what changed.</td><td>Run <code>git status</code> first.</td></tr>
+<tr><td>Committing secrets.</td><td>Use <code>.gitignore</code> and secret management.</td></tr>
+<tr><td>Working directly on <code>main</code> for every feature.</td><td>Use focused branches when the project workflow expects them.</td></tr>
+<tr><td>Using <code>git reset --hard</code> casually.</td><td>Understand exactly what will be removed first.</td></tr>
+<tr><td>Force-pushing shared branches.</td><td>Avoid rewriting shared history unless the team explicitly agrees.</td></tr>
+<tr><td>Pulling without checking local changes.</td><td>Run <code>git status</code> first.</td></tr>
+<tr><td>Writing vague commit messages.</td><td>Describe the actual change.</td></tr>
+<tr><td>Thinking Git and GitHub are the same thing.</td><td>Remember: Git = version control; GitHub = hosting/collaboration platform.</td></tr>
+</table>
+
+<h2>52. Essential Command Cheat Sheet</h2>
+
+<table>
+<tr><th>Task</th><th>Command</th></tr>
+<tr><td>Check Git version</td><td><code>git --version</code></td></tr>
+<tr><td>Configure name</td><td><code>git config --global user.name "Name"</code></td></tr>
+<tr><td>Configure email</td><td><code>git config --global user.email "email"</code></td></tr>
+<tr><td>Create repository</td><td><code>git init</code></td></tr>
+<tr><td>Clone repository</td><td><code>git clone URL</code></td></tr>
+<tr><td>Check status</td><td><code>git status</code></td></tr>
+<tr><td>Stage file</td><td><code>git add file</code></td></tr>
+<tr><td>Stage changes</td><td><code>git add .</code></td></tr>
+<tr><td>Commit</td><td><code>git commit -m "message"</code></td></tr>
+<tr><td>View history</td><td><code>git log --oneline</code></td></tr>
+<tr><td>View changes</td><td><code>git diff</code></td></tr>
+<tr><td>Create branch</td><td><code>git switch -c branch-name</code></td></tr>
+<tr><td>Switch branch</td><td><code>git switch branch-name</code></td></tr>
+<tr><td>List branches</td><td><code>git branch</code></td></tr>
+<tr><td>Merge branch</td><td><code>git merge branch-name</code></td></tr>
+<tr><td>Download remote updates</td><td><code>git fetch</code></td></tr>
+<tr><td>Fetch and integrate</td><td><code>git pull</code></td></tr>
+<tr><td>Upload commits</td><td><code>git push</code></td></tr>
+<tr><td>View remotes</td><td><code>git remote -v</code></td></tr>
+<tr><td>Temporarily save work</td><td><code>git stash</code></td></tr>
+<tr><td>Restore stashed work</td><td><code>git stash pop</code></td></tr>
+<tr><td>Restore working file</td><td><code>git restore file</code></td></tr>
+<tr><td>Unstage file</td><td><code>git restore --staged file</code></td></tr>
+<tr><td>Reverse shared commit</td><td><code>git revert COMMIT_ID</code></td></tr>
+<tr><td>Create tag</td><td><code>git tag v1.0.0</code></td></tr>
+<tr><td>Apply one commit elsewhere</td><td><code>git cherry-pick COMMIT_ID</code></td></tr>
+</table>
+
+<h2>53. Practical Lab — Complete GitHub Exercise</h2>
+
+<div class="exercise">
+  <h3>Goal</h3>
+  <p>Create a small website, track it with Git, publish it to GitHub, develop a feature on a branch, and create a Pull Request.</p>
+
+  <h3>Step 1 — Create a project</h3>
+  <pre><code>mkdir student-git-project
+cd student-git-project</code></pre>
+
+  <h3>Step 2 — Create a simple file</h3>
+  <pre><code>index.html</code></pre>
+
+  <h3>Step 3 — Initialize Git</h3>
+  <pre><code>git init
+git status</code></pre>
+
+  <h3>Step 4 — Commit the first version</h3>
+  <pre><code>git add .
+git commit -m "Create initial website"</code></pre>
+
+  <h3>Step 5 — Create a GitHub repository</h3>
+  <p>Create an empty GitHub repository and connect it:</p>
+  <pre><code>git remote add origin https://github.com/USERNAME/student-git-project.git
+git branch -M main
+git push -u origin main</code></pre>
+
+  <h3>Step 6 — Create a feature branch</h3>
+  <pre><code>git switch -c feature/about-section</code></pre>
+
+  <h3>Step 7 — Add the feature</h3>
+  <p>Add an About section to the HTML file, then:</p>
+  <pre><code>git status
+git add .
+git commit -m "Add about section"</code></pre>
+
+  <h3>Step 8 — Push the branch</h3>
+  <pre><code>git push -u origin feature/about-section</code></pre>
+
+  <h3>Step 9 — Create a Pull Request</h3>
+  <p>Open the Pull Request on GitHub and compare the feature branch with the target branch.</p>
+
+  <h3>Step 10 — Review and merge</h3>
+  <p>Review the changed files, add a useful description, and merge according to the repository workflow.</p>
+</div>
+
+<h2>54. Practical Lab — Merge Conflict</h2>
+
+<div class="exercise">
+  <ol>
+    <li>Create a repository.</li>
+    <li>Create <code>main</code> with a text file.</li>
+    <li>Create branch <code>feature-a</code> and change the same line.</li>
+    <li>Commit the change.</li>
+    <li>Switch to <code>main</code> and change the same line differently.</li>
+    <li>Commit the main-branch change.</li>
+    <li>Merge <code>feature-a</code>.</li>
+    <li>Observe the conflict.</li>
+    <li>Resolve the file manually.</li>
+    <li>Stage and complete the merge.</li>
+  </ol>
+
+  <p><strong>Learning goal:</strong> Students should understand that a merge conflict is not a Git failure. It means Git needs a human to decide what the final code should be.</p>
+</div>
+
+<h2>55. Practical Lab — Undo Practice</h2>
+
+<div class="exercise">
+  <p>Create three commits and deliberately make different mistakes:</p>
+  <ol>
+    <li>Modify a file and use <code>git restore</code> to discard the uncommitted change.</li>
+    <li>Stage a file and use <code>git restore --staged</code> to unstage it.</li>
+    <li>Create a commit and use <code>git revert</code> to reverse it.</li>
+    <li>Create temporary work and practice <code>git stash</code>.</li>
+  </ol>
+  <p>Do this in a practice repository, not in an important production repository.</p>
+</div>
+
+<h2>56. Git Mental Model</h2>
+
+<div class="flow">
+  Working Directory<br>
+  ↓ git add<br>
+  Staging Area<br>
+  ↓ git commit<br>
+  Local Repository<br>
+  ↓ git push<br>
+  GitHub Remote<br>
+  ↓ Pull Request / Collaboration<br>
+  Team
+</div>
+
+<h2>57. The 10 Commands Students Should Master First</h2>
+
+<ol>
+  <li><code>git status</code></li>
+  <li><code>git init</code></li>
+  <li><code>git clone</code></li>
+  <li><code>git add</code></li>
+  <li><code>git commit</code></li>
+  <li><code>git log</code></li>
+  <li><code>git switch</code></li>
+  <li><code>git pull</code></li>
+  <li><code>git push</code></li>
+  <li><code>git merge</code></li>
+</ol>
+
+<h2>58. Final Professional Workflow</h2>
+
+<p>For most feature-based team projects, a good general pattern is:</p>
+
+<pre><code># Start from the latest target branch
+git switch main
+git pull
+
+# Create focused work branch
+git switch -c feature/my-feature
+
+# Develop and inspect
+git status
+git diff
+
+# Save a meaningful version
+git add .
+git commit -m "Add my feature"
+
+# Publish branch
+git push -u origin feature/my-feature
+
+# Open Pull Request on GitHub
+# Review → testing → requested changes → approval → merge
+
+# After merging, update local main
+git switch main
+git pull</code></pre>
+
+<div class="tip">
+  <strong>Professional habit:</strong> Keep commits focused, branches short-lived when practical, commit messages meaningful, and the shared main branch stable.
+</div>
+
+<h2>59. Final Revision Questions</h2>
+
+<ol>
+  <li>What is the difference between Git and GitHub?</li>
+  <li>What happens when you run <code>git init</code>?</li>
+  <li>What is the staging area?</li>
+  <li>What is the difference between <code>git add</code> and <code>git commit</code>?</li>
+  <li>What does <code>git status</code> tell you?</li>
+  <li>What is a branch?</li>
+  <li>Why should teams use feature branches?</li>
+  <li>What is the difference between <code>git fetch</code> and <code>git pull</code>?</li>
+  <li>What does <code>git push</code> do?</li>
+  <li>What is a Pull Request?</li>
+  <li>What causes a merge conflict?</li>
+  <li>What is the difference between merge and rebase?</li>
+  <li>When would you use <code>git stash</code>?</li>
+  <li>What is the difference between <code>restore</code>, <code>reset</code>, and <code>revert</code>?</li>
+  <li>Why should secrets never be committed?</li>
+  <li>What is a fork?</li>
+  <li>What is the purpose of an <code>upstream</code> remote?</li>
+  <li>What is a tag?</li>
+  <li>What is detached HEAD?</li>
+  <li>What is a Git submodule?</li>
+</ol>
+
+<h2>60. Final Rule to Remember</h2>
+
+<div class="box">
+  <p><strong>Git is about managing versions of your code.</strong></p>
+  <p><strong>GitHub is about sharing those repositories and collaborating with other developers.</strong></p>
+  <p><strong>When in doubt: check <code>git status</code> before doing anything destructive.</strong></p>
+</div>
+
+<p class="small">
+  Teaching note: Commands and concepts in this guide are based on the current Git command reference and GitHub documentation. Always follow the specific workflow and branch protection rules of the project you are working on.
+</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Flexbox Complete Guide</title>
+<style>
+/*
+============================================================
+06 — CSS FLEXBOX COMPLETE STUDY GUIDE
+============================================================
+
+Flexbox is a one-dimensional layout system.
+
+The parent becomes a FLEX CONTAINER:
+display: flex;
+
+Its direct children become FLEX ITEMS.
+
+MAIN AXIS:
+The direction defined by flex-direction.
+
+CROSS AXIS:
+The axis perpendicular to the main axis.
+
+CONTAINER PROPERTIES:
+display
+flex-direction
+flex-wrap
+flex-flow
+justify-content
+align-items
+align-content
+gap / row-gap / column-gap
+
+ITEM PROPERTIES:
+order
+flex-grow
+flex-shrink
+flex-basis
+flex
+align-self
+
+------------------------------------------------------------
+flex-direction
+------------------------------------------------------------
+
+row (default)
+  Main axis is horizontal.
+
+row-reverse
+  Horizontal direction is reversed.
+
+column
+  Main axis is vertical.
+
+column-reverse
+  Vertical direction is reversed.
+
+------------------------------------------------------------
+justify-content
+------------------------------------------------------------
+
+Controls distribution along the MAIN AXIS.
+
+Common values:
+flex-start
+flex-end
+center
+space-between
+space-around
+space-evenly
+
+------------------------------------------------------------
+align-items
+------------------------------------------------------------
+
+Controls alignment on the CROSS AXIS for items in a line.
+
+Common values:
+stretch
+flex-start
+flex-end
+center
+baseline
+
+------------------------------------------------------------
+flex-wrap
+------------------------------------------------------------
+
+nowrap (default)
+  Items remain on one line and may shrink.
+
+wrap
+  Items can move to additional lines.
+
+wrap-reverse
+  Additional lines are placed in the reverse cross direction.
+
+------------------------------------------------------------
+align-content
+------------------------------------------------------------
+
+Controls spacing/alignment BETWEEN flex lines when wrapping
+creates multiple lines and there is extra cross-axis space.
+
+It is not the same as align-items.
+
+------------------------------------------------------------
+gap
+------------------------------------------------------------
+
+gap creates spacing between flex items/lines without requiring
+margins on each child.
+
+------------------------------------------------------------
+flex-grow / flex-shrink / flex-basis
+------------------------------------------------------------
+
+flex-grow:
+  How much an item can grow relative to other growing items.
+
+flex-shrink:
+  How much an item can shrink relative to other shrinking items.
+
+flex-basis:
+  The initial main-size contribution before remaining space is
+  distributed.
+
+flex:
+  Shorthand commonly written as:
+  flex: grow shrink basis;
+
+Example:
+  flex: 1;
+  is commonly used to allow items to share available space.
+
+Use these properties when item sizes need to respond to available
+space rather than remain fixed.
+
+------------------------------------------------------------
+order
+------------------------------------------------------------
+
+Changes the visual order of flex items without changing the
+HTML source order.
+
+Use carefully. The source order should still make sense for
+accessibility and keyboard navigation.
+
+*/
+
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; padding: 30px; background: #f5f5f5; }
+section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+.flex { display: flex; }
+.row { flex-direction: row; gap: 10px; }
+.column { flex-direction: column; gap: 10px; }
+.wrap { display: flex; flex-wrap: wrap; gap: 10px; }
+.wrap div { width: 180px; padding: 20px; background: #ccc; }
+.justify { display: flex; justify-content: space-between; gap: 10px; }
+.justify div { padding: 20px; background: #ccc; }
+.align { display: flex; align-items: center; height: 160px; gap: 10px; }
+.align div { padding: 20px; background: #ccc; }
+.flex-items { display: flex; gap: 10px; }
+.flex-items div { padding: 20px; background: #ccc; }
+.grow-a { flex: 1; }
+.grow-b { flex: 2; }
+.order-a { order: 2; }
+.order-b { order: 1; }
+</style>
+</head>
+<body>
+<h1>CSS Flexbox</h1>
+
+<section><h2>1. Row</h2><div class="flex row"><div>1</div><div>2</div><div>3</div></div></section>
+<section><h2>2. Column</h2><div class="flex column"><div>1</div><div>2</div><div>3</div></div></section>
+<section><h2>3. Wrapping</h2><div class="wrap"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div></div></section>
+<section><h2>4. justify-content</h2><div class="justify"><div>Left</div><div>Middle</div><div>Right</div></div></section>
+<section><h2>5. align-items</h2><div class="align"><div>One</div><div>Two</div><div>Three</div></div></section>
+<section><h2>6. flex-grow</h2><div class="flex-items"><div class="grow-a">flex: 1</div><div class="grow-b">flex: 2</div><div class="grow-a">flex: 1</div></div></section>
+<section><h2>7. order</h2><div class="flex-items"><div class="order-a">Visual 2</div><div class="order-b">Visual 1</div></div></section>
+</body>
+</html>

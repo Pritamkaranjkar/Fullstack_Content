@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Selectors</title>
+<style>
+/*
+============================================================
+03 — CSS SELECTORS, COMBINATORS AND SPECIFICITY
+============================================================
+
+Selectors determine which elements receive a CSS rule.
+
+ELEMENT SELECTOR:
+p { ... }
+Targets every <p> element.
+
+CLASS SELECTOR:
+.card { ... }
+Targets every element with class="card".
+
+ID SELECTOR:
+#header { ... }
+Targets the element with id="header".
+
+ATTRIBUTE SELECTOR:
+input[type="email"] { ... }
+Targets elements matching the attribute condition.
+
+GROUPING:
+h1, h2, h3 { ... }
+Applies the same rule to multiple selectors.
+
+DESCENDANT:
+.card p { ... }
+Targets p elements anywhere inside .card.
+
+CHILD:
+.card > p { ... }
+Targets only p elements that are direct children.
+
+ADJACENT SIBLING:
+h2 + p { ... }
+Targets the first p immediately following h2.
+
+GENERAL SIBLING:
+h2 ~ p { ... }
+Targets p elements that follow h2 as siblings.
+
+Pseudo-classes represent states/conditions:
+:hover, :focus, :first-child, :nth-child(), :not()
+
+Pseudo-elements represent a conceptual part:
+::before, ::after, ::first-letter, ::first-line
+
+SPECIFICITY:
+When competing declarations are otherwise in the same
+relevant cascade origin/layer and importance, selector
+specificity helps determine which declaration wins.
+
+A useful teaching model is:
+ID > CLASS/ATTRIBUTE/PSEUDO-CLASS > ELEMENT/PSEUDO-ELEMENT
+
+If specificity is equal, later source order wins.
+
+Do not solve every CSS conflict by adding more selectors
+or using !important. Prefer simple, predictable selectors.
+*/
+
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; padding: 30px; background: #f5f5f5; }
+section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+.demo { padding: 12px; margin: 8px 0; border: 1px solid #aaa; }
+p { color: #444; }
+.box { background: #ddd; padding: 12px; margin: 8px 0; }
+.card p { font-weight: bold; }
+.card > .direct { text-decoration: underline; }
+h3 + p { border-left: 4px solid #555; padding-left: 10px; }
+button:hover { transform: translateY(-2px); }
+button:focus { outline: 3px solid #999; }
+.list li:nth-child(2) { font-weight: bold; }
+.list li:not(:first-child) { margin-top: 5px; }
+
+/*
+Specificity example:
+
+p            -> element
+.note        -> class
+#message     -> ID
+
+If all three target the same paragraph and set color,
+the ID selector has greater specificity.
+
+Avoid unnecessary IDs for reusable component styling.
+*/
+
+#specific { color: #222; }
+.specific { color: #666; }
+</style>
+</head>
+<body>
+<h1>CSS Selectors</h1>
+
+<section>
+<h2>Element, Class and ID</h2>
+<p>Element selector example.</p>
+<div class="box">Class selector example.</div>
+<div id="unique" class="box">ID selector example.</div>
+</section>
+
+<section>
+<h2>Combinators</h2>
+<div class="card">
+<p>Descendant paragraph.</p>
+<div><p>Nested paragraph.</p></div>
+<p class="direct">Direct child paragraph.</p>
+</div>
+<h3>Heading</h3>
+<p>Adjacent sibling paragraph.</p>
+</section>
+
+<section>
+<h2>Pseudo-classes</h2>
+<button>Hover or focus me</button>
+<ul class="list">
+<li>First</li><li>Second</li><li>Third</li>
+</ul>
+</section>
+
+<section>
+<h2>Specificity</h2>
+<p id="specific" class="specific">The ID rule wins here because it has greater specificity.</p>
+</section>
+</body>
+</html>

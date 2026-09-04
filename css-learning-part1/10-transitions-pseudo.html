@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pseudo Classes, Pseudo Elements and Transitions</title>
+
+<style>
+
+/*
+============================================================
+10 — PSEUDO-CLASSES, PSEUDO-ELEMENTS AND TRANSITIONS
+============================================================
+
+These CSS features are mainly used to make websites more
+interactive and visually interesting.
+
+For example:
+
+- Change a button when the mouse is placed over it.
+- Change an input box when the user clicks on it.
+- Style the first item in a list.
+- Add a small icon or decoration before some text.
+- Make a button move smoothly instead of changing suddenly.
+
+We will learn:
+
+1. Pseudo-classes
+2. Pseudo-elements
+3. Transitions
+4. Transform
+*/
+
+
+/*
+============================================================
+1. PSEUDO-CLASS
+============================================================
+
+A pseudo-class is used when an element is in a particular
+STATE or has a particular CONDITION.
+
+Think about a real-life button.
+
+Normally:
+    "Submit"
+
+When you move your mouse over it:
+    The button may change color.
+
+When you click it:
+    It may look pressed.
+
+CSS can detect these situations using pseudo-classes.
+
+The syntax uses ONE colon (:)
+
+Example:
+
+button:hover {
+    background: black;
+}
+
+Here:
+
+button = the element
+:hover = the state
+background = the property we want to change
+
+
+COMMON PSEUDO-CLASSES:
+
+:hover
+    When the mouse is over an element.
+
+:focus
+    When an input, button or other focusable element
+    is selected/focused.
+
+:active
+    While an element is being activated, such as while
+    a button is being pressed.
+
+:visited
+    Used for links that the user has already visited.
+
+:checked
+    Used for checked checkboxes or radio buttons.
+
+:disabled
+    Used for disabled form controls.
+
+:first-child
+    Selects an element when it is the first child.
+
+:last-child
+    Selects an element when it is the last child.
+
+:nth-child()
+    Selects an element based on its position.
+
+:not()
+    Selects elements that do NOT match a condition.
+
+
+REAL-LIFE EXAMPLES:
+
+:hover
+    Shopping website:
+    Move the mouse over "Add to Cart" → button changes.
+
+:focus
+    Login page:
+    Click the Email box → its border becomes highlighted.
+
+:checked
+    Registration form:
+    Tick "I agree" → checkbox becomes checked.
+
+:disabled
+    Form:
+    A button may be disabled until required information
+    has been entered.
+
+:nth-child()
+    Product list:
+    You may want to style every second item differently.
+*/
+
+
+/* Example: :hover */
+.button-demo {
+    padding: 12px 20px;
+    border: none;
+    background: #333;
+    color: white;
+    cursor: pointer;
+
+    /*
+      transition makes the change happen smoothly.
+      Without transition, the change can happen immediately.
+    */
+    transition: background-color 0.3s ease,
+                transform 0.3s ease;
+}
+
+/*
+:hover means:
+
+"When the mouse is over this button,
+apply these styles."
+*/
+.button-demo:hover {
+    background: #666;
+    transform: translateY(-3px);
+}
+
+
+/*
+:active means the element is currently being pressed.
+
+Try holding the mouse button down on the button.
+*/
+.button-demo:active {
+    transform: translateY(0);
+}
+
+
+/*
+============================================================
+2. :FOCUS
+============================================================
+
+:focus is commonly used with form fields.
+
+Real-life example:
+
+Imagine a login form:
+
+Email:    [________________]
+Password: [________________]
+
+When the user clicks the Email box, we can highlight
+that box so the user knows where they are typing.
+
+This is useful for both usability and accessibility.
+*/
+
+input {
+    padding: 10px;
+    border: 2px solid #999;
+    border-radius: 5px;
+
+    transition: border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/*
+When the input is selected, :focus is applied.
+*/
+input:focus {
+    border-color: #333;
+    box-shadow: 0 0 0 3px #ddd;
+
+    /*
+      outline: none is sometimes used in custom designs,
+      but removing the browser focus indicator without
+      providing another clear focus style should be avoided.
+    */
+}
+
+
+/*
+============================================================
+3. STRUCTURAL PSEUDO-CLASSES
+============================================================
+
+These are useful when we want to select an element based
+on its position.
+
+:first-child
+    Selects the first child.
+
+:last-child
+    Selects the last child.
+
+:nth-child()
+    Selects a particular position.
+
+REAL-LIFE EXAMPLE:
+
+Imagine a list of students:
+
+1. Rahul
+2. Priya
+3. Amit
+4. Neha
+
+If we want to style only the second student,
+we can use:
+
+li:nth-child(2) {
+    ...
+}
+
+This means:
+
+"Select the second <li> element."
+*/
+
+
+.list li:first-child {
+    font-weight: bold;
+}
+
+.list li:nth-child(3) {
+    background: #ddd;
+    padding: 8px;
+}
+
+.list li:last-child {
+    font-style: italic;
+}
+
+
+/*
+============================================================
+4. :NOT()
+============================================================
+
+:not() means:
+
+"Select elements that do NOT match this condition."
+
+Example:
+
+.list li:not(:first-child)
+
+means:
+
+"Select every li except the first one."
+
+This can be useful when most elements need the same style
+but one particular element should be excluded.
+*/
+
+.list li:not(:first-child) {
+    margin-top: 5px;
+}
+
+
+/*
+============================================================
+5. PSEUDO-ELEMENT
+============================================================
+
+A pseudo-element lets us style or add something to a
+PART of an element.
+
+The syntax normally uses TWO colons (::)
+
+Examples:
+
+::before
+::after
+::first-letter
+::first-line
+::placeholder
+
+
+Think about a heading:
+
+★ Popular Products
+
+The star could be added using ::before.
+
+We don't necessarily need to put the star directly
+inside the HTML.
+
+CSS can add decorative content.
+
+
+REAL-LIFE USES:
+
+::before
+    Add an icon, line or decoration before content.
+
+::after
+    Add an icon, line or decoration after content.
+
+::first-letter
+    Make the first letter of a paragraph larger.
+
+::first-line
+    Style the first line of text.
+
+::placeholder
+    Style placeholder text inside an input.
+
+
+IMPORTANT:
+
+For ::before and ::after, the content property is normally
+required.
+
+Example:
+
+.title::before {
+    content: "★";
+}
+
+Here CSS adds a star before the title.
+*/
+
+
+.title::before {
+    content: "★ ";
+}
+
+
+/*
+::after can add something after the content.
+
+For example, a small arrow after a link.
+*/
+
+.read-more::after {
+    content: " →";
+}
+
+
+/*
+============================================================
+6. ::FIRST-LETTER
+============================================================
+
+This selects only the first letter of the text.
+
+REAL-LIFE EXAMPLE:
+
+Magazine and newspaper articles sometimes make the
+first letter larger.
+
+This is called a drop-cap style.
+*/
+
+.article::first-letter {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+
+/*
+============================================================
+7. ::PLACEHOLDER
+============================================================
+
+The placeholder is the temporary text shown inside
+an input before the user enters something.
+
+Example:
+
+[ Enter your email ]
+
+We can style that placeholder text.
+*/
+
+input::placeholder {
+    color: #777;
+}
+
+
+/*
+============================================================
+8. TRANSITION
+============================================================
+
+A transition makes a CSS change happen SMOOTHLY.
+
+Without transition:
+
+Button:
+    Grey → Black
+
+The change happens immediately.
+
+With transition:
+
+Button:
+    Grey → slightly darker → darker → Black
+
+The change happens smoothly.
+
+REAL-LIFE EXAMPLES:
+
+- Button changes color when hovered.
+- Card moves slightly when hovered.
+- Menu opens smoothly.
+- Input border changes smoothly.
+- Image becomes slightly larger.
+
+COMMON SYNTAX:
+
+transition: property duration timing-function delay;
+
+
+Example:
+
+transition: background-color 0.3s ease;
+
+
+Here:
+
+background-color
+    The property that should change.
+
+0.3s
+    How long the change takes.
+
+ease
+    Controls how the animation speeds up and slows down.
+
+delay
+    Optional waiting time before the transition starts.
+
+
+You can transition multiple properties:
+
+transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+
+
+It is usually better to name the properties you actually
+want to animate instead of using:
+
+transition: all;
+
+
+Using specific properties makes the CSS easier to understand
+and avoids animating properties unnecessarily.
+*/
+
+
+/*
+============================================================
+9. TRANSFORM
+============================================================
+
+transform changes the visual position, size or angle
+of an element.
+
+Common transform functions:
+
+translate()
+    Moves an element.
+
+scale()
+    Makes an element larger or smaller.
+
+rotate()
+    Rotates an element.
+
+skew()
+    Slants an element.
+
+
+REAL-LIFE EXAMPLES:
+
+translate()
+    A card moves slightly upward when hovered.
+
+scale()
+    A product image becomes slightly larger.
+
+rotate()
+    An icon rotates.
+
+These are often combined with transition to make the
+change smooth.
+*/
+
+
+.transform-demo {
+    width: 150px;
+    padding: 20px;
+    background: #ddd;
+    text-align: center;
+
+    transition: transform 0.3s ease;
+}
+
+.transform-demo:hover {
+    /*
+      scale(1.05) makes the element 5% larger.
+    */
+    transform: scale(1.05);
+}
+
+
+/*
+============================================================
+10. BEFORE + AFTER PRACTICAL EXAMPLE
+============================================================
+
+Imagine a "Popular Product" card.
+
+We can use:
+
+::before → add a "★" before the title
+::after  → add an arrow after "View Details"
+
+This keeps decorative content separate from the main
+HTML structure.
+*/
+
+.card {
+    position: relative;
+    padding: 25px;
+    background: #eee;
+    margin-top: 15px;
+}
+
+.card::before {
+    content: "★ ";
+    font-weight: bold;
+}
+
+.card::after {
+    content: "  →";
+}
+
+
+/*
+============================================================
+QUICK SUMMARY
+============================================================
+
+PSEUDO-CLASS (:)
+    Describes a STATE or CONDITION.
+
+    Example:
+    button:hover
+
+    Meaning:
+    "When the mouse is over the button."
+
+
+PSEUDO-ELEMENT (::)
+    Styles or adds something to a PART of an element.
+
+    Example:
+    .title::before
+
+    Meaning:
+    "Add/style something before the title."
+
+
+TRANSITION
+    Makes a CSS change happen smoothly.
+
+    Example:
+    transition: transform 0.3s ease;
+
+
+TRANSFORM
+    Changes the visual position, size or rotation.
+
+    Example:
+    transform: scale(1.05);
+
+
+EASY WAY TO REMEMBER:
+
+Pseudo-class
+    = "What state is the element in?"
+
+Pseudo-element
+    = "What part of the element do I want to style?"
+
+Transition
+    = "How smoothly should the change happen?"
+
+Transform
+    = "How should the element move, grow or rotate?"
+*/
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 30px;
+    background: #f5f5f5;
+}
+
+section {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Pseudo Classes, Pseudo Elements and Transitions</h1>
+
+<section>
+    <h2>1. :hover and :active</h2>
+
+    <p>
+        Move your mouse over the button and then click it.
+    </p>
+
+    <button class="button-demo">
+        Add to Cart
+    </button>
+</section>
+
+
+<section>
+    <h2>2. :focus</h2>
+
+    <p>
+        Click inside the input box or use the Tab key.
+    </p>
+
+    <input type="email" placeholder="Enter your email">
+</section>
+
+
+<section>
+    <h2>3. :first-child, :nth-child() and :last-child</h2>
+
+    <p>
+        The first, second and last items are styled differently.
+    </p>
+
+    <ul class="list">
+        <li>Rahul</li>
+        <li>Priya</li>
+        <li>Amit</li>
+        <li>Neha</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>4. Pseudo-element ::before</h2>
+
+    <h3 class="title">
+        Popular Products
+    </h3>
+
+    <p>
+        The star before the heading is added using ::before.
+    </p>
+</section>
+
+
+<section>
+    <h2>5. Pseudo-element ::after</h2>
+
+    <p class="read-more">
+        View Details
+    </p>
+
+    <p>
+        The arrow after the text is added using ::after.
+    </p>
+</section>
+
+
+<section>
+    <h2>6. ::first-letter</h2>
+
+    <p class="article">
+        This paragraph demonstrates how the first letter
+        can be styled differently from the rest of the text.
+    </p>
+</section>
+
+
+<section>
+    <h2>7. Transition + Transform</h2>
+
+    <p>
+        Move your mouse over the box. It smoothly becomes
+        slightly larger.
+    </p>
+
+    <div class="transform-demo">
+        Product
+    </div>
+</section>
+
+
+<section>
+    <h2>8. Real-Life Example</h2>
+
+    <div class="card">
+        Popular Product
+    </div>
+
+    <p>
+        Here ::before adds the star and ::after adds the arrow.
+        This is a common way to add small decorative elements.
+    </p>
+</section>
+
+</body>
+</html>

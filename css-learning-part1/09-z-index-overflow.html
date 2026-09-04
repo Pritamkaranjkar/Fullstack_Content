@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Z-Index and Overflow</title>
+<style>
+/*
+============================================================
+09 — Z-INDEX, STACKING AND OVERFLOW
+============================================================
+
+Z-INDEX:
+Controls the stacking order of positioned elements and certain
+other layout/stacking contexts.
+
+A higher z-index does NOT universally mean "always on top".
+The element must participate in a context where z-index applies,
+and stacking contexts can isolate descendants.
+
+Use z-index intentionally for layers such as:
+  dropdowns
+  modals
+  sticky headers
+  badges
+  overlays
+
+Avoid random values such as 999999 everywhere. Define a small,
+understandable layering system for real projects.
+
+------------------------------------------------------------
+OVERFLOW
+------------------------------------------------------------
+
+visible (default)
+  Content may paint outside the box.
+
+hidden
+  Clips overflowing content.
+
+scroll
+  Provides scrolling mechanisms even when content may fit.
+
+auto
+  Provides scrolling when needed.
+
+clip
+  Clips overflow without providing a scrolling mechanism.
+
+overflow-x controls the horizontal axis.
+overflow-y controls the vertical axis.
+
+Use overflow carefully. Hiding overflow can also hide content
+or interfere with focus/accessible interaction.
+*/
+
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;padding:30px;background:#f5f5f5}
+section{background:white;padding:20px;margin-bottom:20px;border-radius:8px}
+.stack{position:relative;height:180px;background:#ddd}
+.back{position:absolute;left:30px;top:30px;width:150px;height:100px;background:#bbb;z-index:1;padding:15px}
+.front{position:absolute;left:90px;top:70px;width:150px;height:100px;background:#999;z-index:2;padding:15px}
+.overflow-box{width:300px;height:100px;border:2px solid #777;overflow:auto;padding:10px}
+.long{width:600px}
+</style>
+</head>
+<body>
+<h1>Z-Index and Overflow</h1>
+<section><h2>Stacking with z-index</h2><div class="stack"><div class="back">z-index: 1</div><div class="front">z-index: 2</div></div></section>
+<section><h2>Overflow: auto</h2><div class="overflow-box"><div class="long">This content is deliberately wider than the container. Scroll horizontally and vertically if the content requires it.</div></div></section>
+<section><h2>Important</h2><p>When z-index appears not to work, inspect positioning and stacking contexts before simply increasing the number.</p></section>
+</body>
+</html>

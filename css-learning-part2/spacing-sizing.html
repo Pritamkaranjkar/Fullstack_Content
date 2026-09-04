@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Spacing & Sizing</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 30px;
+      background: #f5f7fa;
+    }
+
+    .container {
+      /*
+        max-width prevents the content from becoming too wide
+        on large screens.
+      */
+      max-width: 900px;
+
+      /* margin: auto centers a block with a defined width/max-width. */
+      margin: auto;
+    }
+
+    .box {
+      /*
+        min-width prevents the element from becoming narrower
+        than the specified value.
+      */
+      min-width: 250px;
+
+      margin: 20px 0;   /* Outside spacing */
+      padding: 25px;    /* Inside spacing */
+
+      background: white;
+      border: 1px solid #d8dee9;
+      border-radius: 10px;
+    }
+
+    .row {
+      /*
+        gap creates space BETWEEN flex children.
+        Unlike margin, gap belongs to the layout container.
+      */
+      display: flex;
+      gap: 20px;
+    }
+
+    .row div {
+      flex: 1;
+      padding: 25px;
+      background: #dbeafe;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Spacing & Sizing</h1>
+
+    <div class="box">
+      Margin and padding
+    </div>
+
+    <div class="row">
+      <div>Item 1</div>
+      <div>Item 2</div>
+      <div>Item 3</div>
+    </div>
+
+    <!--
+      Practice:
+      1. Change margin.
+      2. Change padding.
+      3. Change gap.
+      4. Change max-width.
+      5. Change min-width.
+    -->
+
+  </div>
+
+</body>
+</html>

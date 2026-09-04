@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Display and Normal Flow</title>
+<style>
+/*
+============================================================
+04 — DISPLAY AND NORMAL FLOW
+============================================================
+
+The display property determines how an element participates
+in layout and how its children are laid out.
+
+COMMON VALUES:
+
+block
+  Starts on a new line and normally uses the available
+  inline width.
+
+inline
+  Flows within surrounding text. Width/height and vertical
+  margins do not behave like block boxes.
+
+inline-block
+  Flows inline while allowing width and height to be controlled
+  like a block-level box.
+
+none
+  Removes the element from layout and rendering.
+
+flex
+  Creates a Flexbox formatting context for direct children.
+
+grid
+  Creates a Grid formatting context for direct children.
+
+NORMAL FLOW is the default layout behaviour before other layout
+systems such as Flexbox, Grid or positioning change it.
+
+Do not choose display values only because they make a layout
+"look right". Choose them according to the layout relationship
+you need.
+*/
+
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; padding: 30px; background: #f5f5f5; }
+section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+.demo { background: #eee; padding: 15px; margin-top: 12px; }
+.block { display: block; background: #ddd; padding: 10px; margin: 5px 0; }
+.inline { display: inline; background: #ccc; padding: 8px; }
+.inline-block { display: inline-block; width: 150px; padding: 15px; margin: 5px; background: #bbb; }
+.hidden { display: none; }
+
+/*
+FLEX example:
+Use for one-dimensional alignment.
+*/
+.flex { display: flex; gap: 10px; justify-content: center; }
+.flex div { padding: 20px; background: #ccc; }
+
+/*
+GRID example:
+Use for two-dimensional row/column layouts.
+*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.grid div { padding: 25px; background: #bbb; text-align: center; }
+
+/*
+The two-value display syntax is also defined in modern CSS,
+for example:
+display: block flex;
+display: block grid;
+
+For normal beginner code, display: flex and display: grid
+are the common forms and are sufficient for most projects.
+*/
+</style>
+</head>
+<body>
+<h1>CSS Display</h1>
+
+<section><h2>Block</h2><div class="demo"><span class="block">Block 1</span><span class="block">Block 2</span></div></section>
+<section><h2>Inline</h2><div class="demo">Text <span class="inline">Inline element</span> continues on the same line.</div></section>
+<section><h2>Inline-block</h2><div class="demo"><span class="inline-block">One</span><span class="inline-block">Two</span><span class="inline-block">Three</span></div></section>
+<section><h2>None</h2><div class="demo"><p>Visible content.</p><p class="hidden">This element is not part of the layout.</p></div></section>
+<section><h2>Flex</h2><div class="demo flex"><div>1</div><div>2</div><div>3</div></div></section>
+<section><h2>Grid</h2><div class="demo grid"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div></section>
+</body>
+</html>

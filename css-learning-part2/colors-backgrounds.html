@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Colors & Backgrounds</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 30px;
+      color: #172033;
+    }
+
+    .color {
+      /* color changes the foreground/text color. */
+      color: #2563eb;
+    }
+
+    .background {
+      /* background can set the background color. */
+      background: #dbeafe;
+      padding: 30px;
+      margin: 15px 0;
+    }
+
+    .gradient {
+      /*
+        A gradient creates a smooth transition between colors.
+      */
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      padding: 50px 30px;
+      margin: 15px 0;
+      border-radius: 12px;
+    }
+
+    .image {
+      /*
+        background-image places an image behind the content.
+        Replace the URL with your own image when practicing.
+      */
+      background-image: url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 70px 30px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Colors & Backgrounds</h1>
+
+  <h2 class="color">Text Color</h2>
+
+  <div class="background">
+    Background color
+  </div>
+
+  <div class="gradient">
+    Gradient background
+  </div>
+
+  <div class="image">
+    Background image
+  </div>
+
+  <!--
+    Practice:
+    Try hex, rgb(), rgba(), and named colors.
+    Change the gradient direction.
+    Experiment with background-size and background-position.
+  -->
+</body>
+</html>

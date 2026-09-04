@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flexbox vs Grid</title>
+<style>
+/*
+============================================================
+08 — FLEXBOX VS GRID
+============================================================
+
+FLEXBOX:
+  One-dimensional layout.
+  Think mainly in terms of one row OR one column.
+
+GRID:
+  Two-dimensional layout.
+  Think in terms of rows AND columns.
+
+This is a guideline, not a strict rule.
+
+Typical choices:
+
+Navigation bar       -> Flexbox
+Button group         -> Flexbox
+Toolbar              -> Flexbox
+Card grid            -> Grid
+Dashboard            -> Grid
+Page-level regions   -> Grid
+Alignment inside a card -> Flexbox
+
+They can and often should be combined.
+
+Example:
+  Grid creates the page's major columns.
+  Flexbox aligns controls inside a component.
+*/
+
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;padding:30px;background:#f5f5f5}
+section{background:white;padding:20px;margin-bottom:20px;border-radius:8px}
+.flex{display:flex;gap:10px}
+.flex div{flex:1;padding:20px;background:#ccc;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid div{padding:20px;background:#bbb;text-align:center}
+</style>
+</head>
+<body>
+<h1>Flexbox vs Grid</h1>
+<section><h2>Flexbox — one dimension</h2><div class="flex"><div>1</div><div>2</div><div>3</div></div></section>
+<section><h2>Grid — two dimensions</h2><div class="grid"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div></section>
+<section>
+<h2>Decision Rule</h2>
+
+<p>
+  <strong>Use Flexbox</strong> when you mainly want to arrange
+  items in a single row or a single column.
+</p>
+
+<p>
+  <strong>Use Grid</strong> when you need to arrange items in
+  both rows and columns.
+</p>
+
+<h3>Real-Life Example: Shopping Website</h3>
+
+<p>
+  Imagine a shopping website. The navigation bar might look like:
+</p>
+
+<p>
+  <strong>Logo | Home | Products | About | Contact</strong>
+</p>
+
+<p>
+  These items are mainly arranged in one row, so
+  <strong>Flexbox</strong> is a good choice.
+</p>
+
+<p>
+  The products might be displayed like this:
+</p>
+
+<pre>
+Product 1    Product 2    Product 3
+Product 4    Product 5    Product 6
+</pre>
+
+<p>
+  Here we have both rows and columns, so
+  <strong>Grid</strong> is a good choice.
+</p>
+
+<p>
+  <strong>Easy rule to remember:</strong>
+  Flexbox → row or column.
+  Grid → rows and columns.
+</p>
+
+<p>
+  Do not choose Grid just because it is newer, and do not use
+  Flexbox for every layout. Choose the layout system that best
+  matches the design you want to create.
+</p></section>
+</body>
+</html>

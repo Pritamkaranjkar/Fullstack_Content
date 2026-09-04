@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Grid Complete Guide</title>
+<style>
+/*
+============================================================
+07 — CSS GRID COMPLETE STUDY GUIDE
+============================================================
+
+CSS Grid is a two-dimensional layout system.
+
+The parent becomes a GRID CONTAINER:
+display: grid;
+
+Direct children become GRID ITEMS.
+
+------------------------------------------------------------
+GRID TRACKS
+------------------------------------------------------------
+
+A column or row is called a track.
+
+grid-template-columns defines explicit columns.
+grid-template-rows defines explicit rows.
+
+COMMON COLUMN SYNTAX:
+
+1fr 1fr 1fr
+  Three equal flexible columns.
+
+repeat(3, 1fr)
+  Equivalent and more maintainable when the pattern repeats.
+
+200px 1fr 300px
+  Fixed side columns with a flexible middle column.
+
+30% 70%
+  Percentage-based columns.
+
+minmax(150px, 1fr)
+  Minimum and maximum track size.
+
+repeat(3, minmax(150px, 1fr))
+  Three responsive tracks with a minimum width.
+
+repeat(auto-fit, minmax(200px, 1fr))
+  Automatically fits columns based on available space.
+
+auto-fit and auto-fill:
+  Both create as many tracks as can fit.
+  auto-fit collapses empty tracks so existing items can expand.
+  auto-fill retains the generated empty tracks.
+  auto-fit is often convenient for responsive card grids.
+
+------------------------------------------------------------
+gap
+------------------------------------------------------------
+
+gap: 20px;
+row-gap: 20px;
+column-gap: 30px;
+gap: 20px 30px;  -> row gap, column gap
+
+------------------------------------------------------------
+GRID LINES
+------------------------------------------------------------
+
+A grid has numbered lines around its tracks.
+
+grid-column: 1 / 3;
+  Starts at column line 1 and ends at line 3.
+
+grid-column: span 2;
+  Occupies two columns from its auto-placement position.
+
+grid-row works in the same way for rows.
+
+------------------------------------------------------------
+grid-area
+------------------------------------------------------------
+
+grid-area: row-start / column-start / row-end / column-end;
+
+Example:
+grid-area: 1 / 1 / 3 / 3;
+
+------------------------------------------------------------
+grid-template-areas
+------------------------------------------------------------
+
+Allows named areas such as:
+
+"header header"
+"sidebar main"
+"footer footer"
+
+Children can then use:
+grid-area: header;
+
+This is particularly readable for page-level layouts.
+
+------------------------------------------------------------
+ALIGNMENT
+------------------------------------------------------------
+
+justify-items
+  Aligns all grid items horizontally inside their cells.
+
+align-items
+  Aligns all grid items vertically inside their cells.
+
+place-items
+  Shorthand for align-items + justify-items.
+
+justify-content
+  Positions the entire grid horizontally when extra space exists.
+
+align-content
+  Positions the entire grid vertically when extra space exists.
+
+justify-self
+  Horizontal alignment of one item.
+
+align-self
+  Vertical alignment of one item.
+
+place-self
+  Shorthand for align-self + justify-self.
+
+------------------------------------------------------------
+AUTO PLACEMENT
+------------------------------------------------------------
+
+Grid automatically places items into available cells.
+
+grid-auto-rows controls automatically generated rows.
+
+grid-auto-columns controls automatically generated columns.
+
+grid-auto-flow controls the automatic placement direction.
+
+row is the default.
+column fills columns before creating the next column.
+dense attempts to fill earlier available gaps.
+
+Use dense carefully because visual placement may differ from
+the natural source order.
+
+------------------------------------------------------------
+NESTED GRID
+------------------------------------------------------------
+
+A Grid item can itself become a Grid container.
+
+This is useful for complex components such as dashboards,
+cards and nested sections.
+
+*/
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; padding: 30px; background: #f5f5f5; }
+section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+.demo { background: #eee; padding: 15px; margin-top: 12px; }
+.item { background: #ccc; padding: 20px; text-align: center; border: 1px solid #aaa; }
+
+/* Basic equal columns */
+.columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+/* Explicit rows */
+.rows { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: 80px 120px; gap: 10px; }
+
+/* Responsive card grid */
+.responsive { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+
+/* Grid lines and spanning */
+.lines { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.span-column { grid-column: 1 / 3; }
+.span-row { grid-row: span 2; }
+
+/* Named areas */
+.layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  gap: 10px;
+}
+.header { grid-area: header; background: #ccc; padding: 20px; }
+.sidebar { grid-area: sidebar; background: #ddd; padding: 20px; }
+.main { grid-area: main; background: #eee; padding: 20px; }
+.footer { grid-area: footer; background: #ccc; padding: 20px; }
+
+/* Alignment */
+.alignment {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 100px;
+  place-items: center;
+  gap: 10px;
+}
+
+/* Nested grid */
+.nested-parent { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.nested-child { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 10px; background: #ddd; }
+.nested-child div { background: #bbb; padding: 15px; text-align: center; }
+</style>
+</head>
+<body>
+<h1>CSS Grid</h1>
+
+<section><h2>1. Basic Columns</h2><div class="demo columns"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div><div class="item">5</div><div class="item">6</div></div></section>
+
+<section><h2>2. Explicit Rows</h2><div class="demo rows"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></section>
+
+<section><h2>3. Responsive Grid with minmax()</h2><div class="demo responsive"><div class="item">Card 1</div><div class="item">Card 2</div><div class="item">Card 3</div><div class="item">Card 4</div><div class="item">Card 5</div></div></section>
+
+<section><h2>4. Grid Lines and Spanning</h2><div class="demo lines"><div class="item span-column">Spans 2 columns</div><div class="item">3</div><div class="item">4</div><div class="item span-row">Spans 2 rows</div><div class="item">6</div></div></section>
+
+<section><h2>5. Named Grid Areas</h2><div class="demo layout"><header class="header">Header</header><aside class="sidebar">Sidebar</aside><main class="main">Main Content</main><footer class="footer">Footer</footer></div></section>
+
+<section><h2>6. Alignment</h2><div class="demo alignment"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></section>
+
+<section><h2>7. Nested Grid</h2><div class="demo nested-parent"><div class="nested-child"><div>A</div><div>B</div><div>C</div><div>D</div></div><div class="nested-child"><div>1</div><div>2</div><div>3</div><div>4</div></div></div></section>
+</body>
+</html>

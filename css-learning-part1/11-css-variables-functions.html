@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Variables and Functions</title>
+<style>
+/*
+============================================================
+11 — CSS CUSTOM PROPERTIES AND FUNCTIONS
+============================================================
+
+CUSTOM PROPERTIES (CSS VARIABLES)
+
+Define:
+:root {
+  --primary: #222;
+  --space: 16px;
+}
+
+Use:
+color: var(--primary);
+padding: var(--space);
+
+Why use them?
+  - Reuse values.
+  - Keep a design system consistent.
+  - Change a shared value in one place.
+  - Create component-level themes.
+
+A custom property inherits by default like other inherited
+properties unless scoped/defined differently.
+
+Fallback:
+color: var(--primary, black);
+
+If --primary is unavailable, the fallback is used.
+
+------------------------------------------------------------
+FUNCTIONS
+------------------------------------------------------------
+
+CSS has functions that calculate or transform values.
+
+calc():
+  calc(100% - 40px)
+
+Useful when combining compatible units.
+
+min():
+  min(100%, 1200px)
+
+Useful for choosing the smaller value.
+
+max():
+  max(300px, 40vw)
+
+Useful for choosing the larger value.
+
+clamp():
+  clamp(minimum, preferred, maximum)
+
+Example:
+font-size: clamp(1rem, 2vw, 2rem);
+
+Useful for fluid values with sensible limits.
+
+Use functions when they make responsive sizing or calculations
+clearer. Do not use them merely to make simple values complex.
+*/
+
+:root{
+  --primary:#333;
+  --surface:#ce0e0e;
+  --space:16px;
+  --radius:8px;
+}
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;margin:0;padding:30px;background:#f5f5f5;color:var(--primary)}
+section{background:white;padding:var(--space);margin-bottom:20px;border-radius:var(--radius)}
+.card{background:var(--surface);padding:var(--space);width:min(100%,700px);margin:auto}
+.fluid{font-size:clamp(1.2rem,3vw,2.5rem)}
+.calculated{width:calc(100% - 40px);padding:20px;background:#eee;margin:20px auto}
+</style>
+</head>
+<body>
+<h1 class="fluid">CSS Variables and Functions</h1>
+<section><div class="card">This component uses custom properties.</div></section>
+<section><div class="calculated">This width uses calc().</div></section>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Box Model</title>
+  <style>
+    /* This page demonstrates the six main Box Model properties. */
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: #f5f7fa;
+      color: #172033;
+    }
+
+    .demo {
+      /* width controls the horizontal size of the element. */
+      width: 300px;
+
+      /* height controls the vertical size of the element. */
+      height: 160px;
+
+      /* padding creates space INSIDE the border. */
+      padding: 25px 15px 5px 15px;
+
+      /* border surrounds the padding and content. */
+      border: 8px solid #2563eb;
+
+      /* margin creates space OUTSIDE the border. */
+      margin: 30px auto;
+
+      background: rgb(153, 42, 42);
+    }
+
+    .box-sizing-demo {
+      width: 300px;
+      padding: 30px;
+      border: 10px solid #16a34a;
+
+      /*
+        border-box means the declared width includes
+        content + padding + border.
+
+        This is commonly used in real projects.
+      */
+      box-sizing: border-box;
+    }
+
+    code { background: #e8edf5; padding: 2px 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>CSS Box Model</h1>
+
+  <p>
+    Every HTML element can be understood as a box:
+    <strong>content → padding → border → margin</strong>.
+  </p>
+
+  <div class="demo">
+    Content area
+  </div>
+
+  <h2>box-sizing: border-box</h2>
+
+  <div class="box-sizing-demo">
+    The 300px width includes padding and border.
+  </div>
+
+  <!--
+    Practice:
+    1. Change width from 300px to 400px.
+    2. Change padding.
+    3. Change border thickness.
+    4. Change margin.
+    5. Remove box-sizing and observe the difference.
+  -->
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ways to Apply CSS</title>
+<style>
+/*
+============================================================
+02 — THREE COMMON WAYS TO APPLY CSS
+============================================================
+
+1. Inline CSS
+2. Internal CSS
+3. External CSS
+
+INLINE:
+<p style="color: red;">Text</p>
+
+Use mainly for very specific cases or generated/dynamic
+styles. It is generally harder to maintain because styling
+is mixed into HTML.
+
+INTERNAL:
+<style>
+p { color: red; }
+</style>
+
+Useful for a single HTML document, prototypes or small
+standalone demonstrations.
+
+EXTERNAL:
+<link rel="stylesheet" href="style.css">
+
+Best choice for multi-page websites because one stylesheet
+can be reused and maintained separately from HTML.
+
+A practical project normally prefers external CSS.
+*/
+
+body { font-family: Arial, sans-serif; padding: 30px; background: #f5f5f5; }
+section { background: white; padding: 20px; margin: 15px 0; border-radius: 8px; }
+.internal { color: #444; }
+.demo { padding: 15px; border: 1px solid #aaa; margin-top: 10px; }
+</style>
+</head>
+<body>
+<h1>Ways to Apply CSS</h1>
+
+<section>
+<h2>1. Inline CSS</h2>
+<p style="color: #444; font-weight: bold;">This paragraph uses inline CSS.</p>
+<p>Inline styles have high author-level precedence and can make large projects difficult to maintain. Prefer classes and external stylesheets for reusable design.</p>
+</section>
+
+<section>
+<h2>2. Internal CSS</h2>
+<p class="internal">This paragraph is styled by the &lt;style&gt; element in this HTML file.</p>
+</section>
+
+<section>
+<h2>3. External CSS</h2>
+<p>In a real project, common styles should normally be placed in a separate .css file and connected using &lt;link&gt;.</p>
+<div class="demo">Example external stylesheet connection: &lt;link rel="stylesheet" href="style.css"&gt;</div>
+</section>
+</body>
+</html>

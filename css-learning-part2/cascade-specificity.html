@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Cascade & Specificity</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      color: #172033;
+    }
+
+    /*
+      INHERITANCE
+
+      Some properties, such as color and font-family,
+      can be inherited from a parent element.
+    */
+    .parent {
+      color: #2563eb;
+      font-family: Georgia, serif;
+    }
+
+    /*
+      CASCADE
+
+      If two rules have the same specificity,
+      the later rule normally wins.
+    */
+    .cascade {
+      color: blue;
+    }
+
+    .cascade {
+      color: green;
+    }
+
+    /*
+      SPECIFICITY
+
+      General teaching order:
+      element < class < ID < inline style
+
+      The ID rule below wins over the class rule.
+    */
+    p {
+      color: #64748b;
+    }
+
+    .specificity {
+      color: green;
+    }
+
+    #specificity {
+      color: red;
+    }
+
+    /*
+      !important overrides normal declarations.
+
+      It should be used sparingly because it makes CSS
+      harder to override and maintain.
+    */
+    .important {
+      color: purple !important;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Cascade & Specificity</h1>
+
+  <h2>1. Inheritance</h2>
+
+  <div class="parent">
+    <p>
+      This paragraph inherits color and font-family from its parent.
+    </p>
+  </div>
+
+  <h2>2. Cascade</h2>
+
+  <p class="cascade">
+    Two identical class rules exist. The later rule wins.
+  </p>
+
+  <h2>3. Specificity</h2>
+
+  <p class="specificity" id="specificity">
+    The ID selector wins over the class and element selector.
+  </p>
+
+  <h2>4. !important</h2>
+
+  <p class="important" style="color: orange;">
+    !important can override the normal inline declaration.
+  </p>
+
+  <!--
+    Practice:
+
+    1. Move the .cascade rules around.
+    2. Remove the ID and see what happens.
+    3. Add another class.
+    4. Remove !important and observe the inline style.
+    5. Ask yourself: "Which rule wins and why?"
+  -->
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Debugging and Best Practices</title>
+<style>
+/*
+============================================================
+12 — CSS DEBUGGING AND GOOD PRACTICES
+============================================================
+
+When CSS does not behave as expected, do not immediately add
+more CSS. Debug systematically.
+
+1. Confirm the selector matches the element.
+2. Inspect the element in DevTools.
+3. Check whether the declaration is crossed out.
+4. Look for specificity/cascade conflicts.
+5. Check inherited values.
+6. Check the box model.
+7. Check display, position and containing blocks.
+8. Check dimensions, overflow and wrapping.
+9. Check whether a parent layout system is controlling the child.
+10. Check browser support when using a newer feature.
+
+COMMON PROBLEMS:
+
+"margin isn't working"
+  Check whether the element is inline, whether margins collapse,
+  and whether another layout rule is affecting it.
+
+"z-index isn't working"
+  Check positioning and stacking contexts.
+
+"width is larger than expected"
+  Check box-sizing, padding and borders.
+
+"flex item isn't shrinking"
+  Check flex-basis, min-width/min-height and content size.
+
+"grid doesn't fit"
+  Check fixed track sizes, minmax(), available width and gaps.
+
+------------------------------------------------------------
+GOOD PRACTICES
+------------------------------------------------------------
+
+Use meaningful class names:
+.card, .navbar, .product-grid
+
+Avoid styling everything through IDs.
+
+Prefer reusable classes over repeated inline styles.
+
+Keep selectors reasonably simple.
+
+Use shorthand when it improves readability and longhand when
+individual control is clearer.
+
+Avoid unnecessary !important.
+
+Use consistent spacing, naming and formatting.
+
+Keep HTML responsible for structure and CSS responsible for
+presentation.
+
+Use semantic HTML so CSS has meaningful structural hooks.
+
+Build responsive layouts instead of assuming one screen size.
+
+Do not use CSS layout systems as a substitute for correct HTML.
+*/
+
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;padding:30px;background:#f5f5f5}
+section{background:white;padding:20px;margin-bottom:20px;border-radius:8px}
+.good{padding:16px;background:#ddd;border:1px solid #aaa}
+</style>
+</head>
+<body>
+<h1>CSS Debugging and Best Practices</h1>
+<section>
+<h2>Debug Checklist</h2>
+<ol>
+<li>Inspect the element.</li>
+<li>Check the selector.</li>
+<li>Check cascade and specificity.</li>
+<li>Check computed values.</li>
+<li>Check parent layout.</li>
+<li>Check box model and dimensions.</li>
+<li>Check overflow and positioning.</li>
+<li>Test responsive sizes.</li>
+</ol>
+</section>
+<section>
+<h2>Maintainable CSS</h2>
+<div class="good">Prefer clear, reusable classes and simple selectors.</div>
+</section>
+</body>
+</html>

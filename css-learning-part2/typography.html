@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Typography</title>
+  <style>
+    body {
+      /* font-family chooses the typeface. */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      color: #172033;
+    }
+
+    h1 {
+      /* font-size controls text size. */
+      font-size: 42px;
+
+      /* font-weight controls thickness. */
+      font-weight: 700;
+
+      /* line-height controls vertical space between lines. */
+      line-height: 1.1;
+
+      /* text-align controls horizontal alignment. */
+      text-align: center;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .light {
+      font-weight: 600;
+    }
+
+    .center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Typography in CSS</h1>
+
+  <p>
+    Typography is about controlling how text looks and reads.
+  </p>
+
+  <p class="light">
+    This paragraph demonstrates a lighter font weight.
+  </p>
+
+  <p class="center">
+    This paragraph is centered using <code>text-align</code>.
+  </p>
+
+  <!--
+    Practice:
+    Change font-family, font-size, font-weight, line-height,
+    and text-align one at a time and observe the result.
+  -->
+</body>
+</html>

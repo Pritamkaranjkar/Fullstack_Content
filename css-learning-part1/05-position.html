@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Position</title>
+<style>
+/*
+============================================================
+05 — CSS POSITIONING
+============================================================
+
+position controls the positioning scheme of an element.
+
+static
+  The default. The element participates in normal flow.
+  top/right/bottom/left do not reposition a static element.
+
+relative
+  The element remains in normal flow, but can be visually
+  offset using top/right/bottom/left.
+  Its original space is retained.
+
+absolute
+  The element is removed from normal flow.
+  It is positioned relative to its nearest positioned ancestor
+  (an ancestor whose position is not static). If none exists,
+  the containing block is established by the initial containing
+  block.
+
+fixed
+  The element is removed from normal flow and positioned relative
+  to the viewport in the usual case. It stays in place while
+  scrolling.
+
+sticky
+  Behaves like relative until a scrolling threshold is reached,
+  then behaves like a stuck element within its containing scroll
+  area. It commonly requires a threshold such as top: 0.
+
+OFFSETS:
+top, right, bottom, left
+
+Use positioning for overlays, badges, floating controls,
+anchored elements and special placement—not as a replacement
+for Flexbox or Grid for ordinary page layout.
+*/
+
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; margin: 0; padding: 30px; background: #f5f5f5; }
+section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+.relative-box { position: relative; left: 25px; background: #ddd; padding: 15px; margin-bottom: 25px; }
+.parent { position: relative; height: 180px; background: #eee; padding: 15px; }
+.absolute-box { position: absolute; right: 15px; bottom: 15px; padding: 15px; background: #bbb; }
+.fixed-demo { position: fixed; right: 20px; bottom: 20px; padding: 12px; background: #444; color: white; border-radius: 6px; }
+.sticky-demo { position: sticky; top: 0; padding: 12px; background: #ccc; z-index: 5; }
+.spacer { height: 400px; background: linear-gradient(#fff,#ddd); }
+</style>
+</head>
+<body>
+<div class="fixed-demo">Fixed</div>
+
+<section>
+<h1>CSS Position</h1>
+<div class="relative-box">Relative: original layout space remains reserved.</div>
+<div class="parent">Positioned parent
+  <div class="absolute-box">Absolute child</div>
+</div>
+</section>
+
+<div class="sticky-demo">Sticky element — scroll the page.</div>
+<div class="spacer"></div>
+<div class="spacer"></div>
+</body>
+</html>

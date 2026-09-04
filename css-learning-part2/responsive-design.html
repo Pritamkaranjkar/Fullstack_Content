@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Design</title>
+  <style>
+    /*
+      MOBILE-FIRST APPROACH
+
+      We first write the layout for small screens.
+      Then we enhance it for larger screens with media queries.
+    */
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f7fa;
+    }
+
+    .container {
+      width: 100%;
+      padding: 20px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .card {
+      padding: 30px;
+      background: white;
+      border: 1px solid #d8dee9;
+      border-radius: 10px;
+    }
+
+    /*
+      MEDIA QUERY
+
+      At 700px and above, change to two columns.
+    */
+    @media (max-width: 700px) {
+      .container {
+        max-width: 600px;
+        padding: 40px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /*
+      At 1000px and above, use three columns.
+    */
+    @media (min-width: 1000px) {
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /*
+      RESPONSIVE UNITS
+
+      clamp() allows a value to grow within a safe range.
+    */
+    h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+
+    <h1>Responsive Design</h1>
+
+    <p>
+      Resize the browser to see the layout change.
+    </p>
+
+    <section class="cards">
+      <article class="card">Card 1</article>
+      <article class="card">Card 2</article>
+      <article class="card">Card 3</article>
+      <article class="card">Card 4</article>
+      <article class="card">Card 5</article>
+      <article class="card">Card 6</article>
+    </section>
+
+    <!--
+      Practice:
+      1. Change the breakpoints.
+      2. Make the desktop layout four columns.
+      3. Try width: 90%.
+      4. Try vw, vh, rem, %, and clamp().
+    -->
+
+  </main>
+
+</body>
+</html>

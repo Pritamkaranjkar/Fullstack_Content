@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Syntax and Shorthand</title>
+<style>
+/*
+============================================================
+01 — CSS SYNTAX, VALUES, SHORTHAND AND LONGHAND
+============================================================
+
+A CSS declaration normally follows this structure:
+
+selector {
+  property: value;
+}
+
+Example:
+
+p {
+  color: blue;
+}
+
+selector  -> identifies which element(s) to style
+property  -> identifies what aspect to change
+value     -> specifies the desired value
+declaration -> property + value
+
+A declaration ends with a semicolon.
+
+CSS is case-insensitive for property names in normal author
+stylesheets, but consistent lowercase naming is recommended.
+*/
+
+/* A selector followed by one or more declarations. */
+.example {
+  color: #222;
+  background-color: #eee;
+}
+
+/*
+============================================================
+SHORTHAND AND LONGHAND
+============================================================
+
+Many CSS properties provide shorthand syntax.
+
+Shorthand combines related longhand properties into one
+declaration. It is useful for reducing repetition.
+
+Longhand is useful when individual sides or values need
+different treatment.
+
+MARGIN SHORTHAND:
+
+margin: 20px;
+-> top 20px, right 20px, bottom 20px, left 20px
+
+margin: 10px 30px;
+-> top/bottom 10px, left/right 30px
+
+margin: 10px 20px 30px;
+-> top 10px, left/right 20px, bottom 30px
+
+margin: 10px 20px 30px 40px;
+-> top 10px, right 20px, bottom 30px, left 40px
+
+The four-value order is:
+TOP -> RIGHT -> BOTTOM -> LEFT
+
+This same 1/2/3/4-value pattern applies to many
+four-sided properties such as padding and border-radius.
+*/
+
+.margin-one { margin: 20px; }
+.margin-two { margin: 10px 30px; }
+.margin-three { margin: 10px 20px 30px; }
+.margin-four { margin: 10px 20px 30px 40px; }
+
+/*
+LONGHAND:
+
+margin-top: 10px;
+margin-right: 20px;
+margin-bottom: 30px;
+margin-left: 40px;
+
+Use longhand when only one side needs to be changed or when
+explicit readability is more important than compact syntax.
+*/
+
+/*
+PADDING follows the same 1/2/3/4-value pattern:
+
+padding: 10px;
+padding: 10px 20px;
+padding: 10px 20px 30px;
+padding: 10px 20px 30px 40px;
+*/
+
+/*
+BORDER SHORTHAND:
+
+border: 1px solid black;
+
+This combines:
+border-width
+border-style
+border-color
+
+You can also control one side:
+
+border-top: 2px solid black;
+*/
+
+/*
+FONT SHORTHAND is more restrictive than margin/padding.
+
+A common form is:
+
+font: 700 20px/1.5 Arial, sans-serif;
+
+This can specify weight, size, line-height and family
+in one declaration.
+
+Use it only when the syntax is clear to the team. Longhand
+font properties can be easier for beginners to maintain.
+*/
+
+/*
+BACKGROUND SHORTHAND can combine multiple background settings.
+
+Example:
+
+background: #eee url("image.jpg") center / cover no-repeat;
+
+When using complex shorthand, remember that omitted values
+can reset related longhand properties. Use longhand when
+precision and maintainability are more important.
+*/
+
+/*
+============================================================
+GLOBAL VALUE CONCEPTS
+============================================================
+
+inherit
+  Uses the value inherited from the parent when the property
+  supports inheritance.
+
+initial
+  Uses the property's initial/default specification value.
+
+unset
+  Acts like inherit for inherited properties and initial for
+  non-inherited properties.
+
+revert
+  Returns toward a value from an earlier cascade origin.
+
+These are useful for resetting or deliberately restoring CSS
+behaviour.
+*/
+
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; margin: 0; padding: 30px; background: #f5f5f5; }
+section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+.box { background: #ddd; border: 1px solid #999; padding: 12px; margin: 8px 0; }
+</style>
+</head>
+<body>
+<h1>CSS Syntax and Shorthand</h1>
+
+<section>
+<h2>Basic Declaration</h2>
+<div class="box example">This element is styled by a selector, property and value.</div>
+</section>
+
+<section>
+<h2>Margin: One Value</h2>
+<div class="box margin-one">margin: 20px;</div>
+</section>
+
+<section>
+<h2>Margin: Two Values</h2>
+<div class="box margin-two">margin: 10px 30px;</div>
+</section>
+
+<section>
+<h2>Margin: Three Values</h2>
+<div class="box margin-three">margin: 10px 20px 30px;</div>
+</section>
+
+<section>
+<h2>Margin: Four Values</h2>
+<div class="box margin-four">margin: 10px 20px 30px 40px;</div>
+</section>
+
+<section>
+<h2>Practice</h2>
+<p>Open DevTools and replace shorthand with longhand. Then change each side independently.</p>
+</section>
+</body>
+</html>
