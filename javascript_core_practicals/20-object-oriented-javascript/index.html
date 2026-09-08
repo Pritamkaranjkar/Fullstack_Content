@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>20 · Object-Oriented JavaScript — JS Core Practicals</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">js_core_practicals</div>
+      <p>21 self-contained exercises covering JavaScript from fundamentals to browser storage.</p>
+    </div>
+    <div class="sidebar-section-label">Explorer</div>
+    <ul class="file-tree">
+      <li><a class="" href="../01-javascript-fundamentals/index.html"><span class="num">01</span>JavaScript Fundamentals</a></li>
+<li><a class="" href="../02-variables-data-types/index.html"><span class="num">02</span>Variables &amp; Data Types</a></li>
+<li><a class="" href="../03-operators/index.html"><span class="num">03</span>Operators</a></li>
+<li><a class="" href="../04-conditions/index.html"><span class="num">04</span>Conditions</a></li>
+<li><a class="" href="../05-loops/index.html"><span class="num">05</span>Loops</a></li>
+<li><a class="" href="../06-functions/index.html"><span class="num">06</span>Functions</a></li>
+<li><a class="" href="../07-strings/index.html"><span class="num">07</span>Strings</a></li>
+<li><a class="" href="../08-arrays/index.html"><span class="num">08</span>Arrays</a></li>
+<li><a class="" href="../09-objects/index.html"><span class="num">09</span>Objects</a></li>
+<li><a class="" href="../10-scope-hoisting-closures/index.html"><span class="num">10</span>Scope, Hoisting &amp; Closures</a></li>
+<li><a class="" href="../11-dom-manipulation/index.html"><span class="num">11</span>DOM Manipulation</a></li>
+<li><a class="" href="../12-events/index.html"><span class="num">12</span>Events</a></li>
+<li><a class="" href="../13-forms-validation/index.html"><span class="num">13</span>Forms &amp; Validation</a></li>
+<li><a class="" href="../14-modern-javascript/index.html"><span class="num">14</span>Modern JavaScript (ES6+)</a></li>
+<li><a class="" href="../15-asynchronous-javascript/index.html"><span class="num">15</span>Asynchronous JavaScript</a></li>
+<li><a class="" href="../16-fetch-json-api/index.html"><span class="num">16</span>Fetch, JSON &amp; APIs</a></li>
+<li><a class="" href="../17-modules/index.html"><span class="num">17</span>Modules</a></li>
+<li><a class="" href="../18-error-handling/index.html"><span class="num">18</span>Error Handling</a></li>
+<li><a class="" href="../19-javascript-runtime/index.html"><span class="num">19</span>JavaScript Runtime</a></li>
+<li><a class="active" href="../20-object-oriented-javascript/index.html"><span class="num">20</span>Object-Oriented JavaScript</a></li>
+<li><a class="" href="../21-browser-storage/index.html"><span class="num">21</span>Browser Storage</a></li>
+    </ul>
+    <div class="sidebar-foot">
+      <div class="progress-label"><span>Progress</span><span>20 / 21</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:95%"></div></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="tabbar">
+      <div class="crumb">javascript_core_practicals<span class="sep">/</span><span class="current">20-object-oriented-javascript</span><span class="sep">/</span>index.html</div>
+      <nav class="tab-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../19-javascript-runtime/index.html">&larr; Prev</a>
+        <a href="../21-browser-storage/index.html">Next &rarr;</a>
+      </nav>
+    </div>
+
+    <header class="page-head">
+      <div class="eyebrow">Topic 20 of 21</div>
+      <h1>Object-Oriented JavaScript</h1>
+      <p class="tagline">Modeling data and behaviour with classes, inheritance, encapsulation and prototypes.</p>
+    </header>
+
+    <div class="workspace">
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-notes"></span>NOTES.md</div>
+        <div class="pane-body notes">
+          
+<h2>Classes</h2>
+<pre><code><span class="tok-kw">class</span> Animal {
+  <span class="tok-kw">constructor</span>(name) { <span class="tok-kw">this</span>.name = name; }
+  speak() { <span class="tok-kw">return</span> <span class="tok-str">`${this.name} makes a sound`</span>; }
+}</code></pre>
+<h2>Inheritance</h2>
+<pre><code><span class="tok-kw">class</span> Dog <span class="tok-kw">extends</span> Animal {
+  speak() { <span class="tok-kw">return</span> <span class="tok-str">`${this.name} barks`</span>; } <span class="tok-com">// overrides parent</span>
+}</code></pre>
+<h2>Encapsulation</h2>
+<pre><code><span class="tok-kw">class</span> Account {
+  <span class="tok-kw">#balance</span> = <span class="tok-num">0</span>; <span class="tok-com">// truly private field</span>
+  <span class="tok-kw">get</span> balance() { <span class="tok-kw">return</span> <span class="tok-kw">this</span>.#balance; }
+}</code></pre>
+<h2>Under the hood: prototypes</h2>
+<p>Classes are sugar over JavaScript's real inheritance model: <strong>prototype chains</strong>. Every
+object has an internal link to another object it delegates lookups to.</p>
+
+        </div>
+      </section>
+
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-console"></span>console — script.js</div>
+        <div class="controls">
+          
+        <div class="field">
+          <label for="oo-name">Dog's name</label>
+          <input type="text" id="oo-name" value="Rex">
+        </div>
+        <button class="primary" data-action="create-dog">Create &amp; use a Dog</button>
+        <button data-action="private-fields">Encapsulation with #private</button>
+        <button data-action="prototype-chain">Inspect the prototype chain</button>
+
+          <button id="clear-btn">Clear console</button>
+        </div>
+        <div class="console" id="output-log">
+          
+          <p class="console-empty">Run a demo above to see output here.</p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="page-foot">javascript_core_practicals / 20-object-oriented-javascript — built with HTML, CSS &amp; vanilla JavaScript</footer>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

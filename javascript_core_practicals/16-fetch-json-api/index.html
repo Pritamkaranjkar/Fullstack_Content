@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>16 · Fetch, JSON &amp; APIs — JS Core Practicals</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">js_core_practicals</div>
+      <p>21 self-contained exercises covering JavaScript from fundamentals to browser storage.</p>
+    </div>
+    <div class="sidebar-section-label">Explorer</div>
+    <ul class="file-tree">
+      <li><a class="" href="../01-javascript-fundamentals/index.html"><span class="num">01</span>JavaScript Fundamentals</a></li>
+<li><a class="" href="../02-variables-data-types/index.html"><span class="num">02</span>Variables &amp; Data Types</a></li>
+<li><a class="" href="../03-operators/index.html"><span class="num">03</span>Operators</a></li>
+<li><a class="" href="../04-conditions/index.html"><span class="num">04</span>Conditions</a></li>
+<li><a class="" href="../05-loops/index.html"><span class="num">05</span>Loops</a></li>
+<li><a class="" href="../06-functions/index.html"><span class="num">06</span>Functions</a></li>
+<li><a class="" href="../07-strings/index.html"><span class="num">07</span>Strings</a></li>
+<li><a class="" href="../08-arrays/index.html"><span class="num">08</span>Arrays</a></li>
+<li><a class="" href="../09-objects/index.html"><span class="num">09</span>Objects</a></li>
+<li><a class="" href="../10-scope-hoisting-closures/index.html"><span class="num">10</span>Scope, Hoisting &amp; Closures</a></li>
+<li><a class="" href="../11-dom-manipulation/index.html"><span class="num">11</span>DOM Manipulation</a></li>
+<li><a class="" href="../12-events/index.html"><span class="num">12</span>Events</a></li>
+<li><a class="" href="../13-forms-validation/index.html"><span class="num">13</span>Forms &amp; Validation</a></li>
+<li><a class="" href="../14-modern-javascript/index.html"><span class="num">14</span>Modern JavaScript (ES6+)</a></li>
+<li><a class="" href="../15-asynchronous-javascript/index.html"><span class="num">15</span>Asynchronous JavaScript</a></li>
+<li><a class="active" href="../16-fetch-json-api/index.html"><span class="num">16</span>Fetch, JSON &amp; APIs</a></li>
+<li><a class="" href="../17-modules/index.html"><span class="num">17</span>Modules</a></li>
+<li><a class="" href="../18-error-handling/index.html"><span class="num">18</span>Error Handling</a></li>
+<li><a class="" href="../19-javascript-runtime/index.html"><span class="num">19</span>JavaScript Runtime</a></li>
+<li><a class="" href="../20-object-oriented-javascript/index.html"><span class="num">20</span>Object-Oriented JavaScript</a></li>
+<li><a class="" href="../21-browser-storage/index.html"><span class="num">21</span>Browser Storage</a></li>
+    </ul>
+    <div class="sidebar-foot">
+      <div class="progress-label"><span>Progress</span><span>16 / 21</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:76%"></div></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="tabbar">
+      <div class="crumb">javascript_core_practicals<span class="sep">/</span><span class="current">16-fetch-json-api</span><span class="sep">/</span>index.html</div>
+      <nav class="tab-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../15-asynchronous-javascript/index.html">&larr; Prev</a>
+        <a href="../17-modules/index.html">Next &rarr;</a>
+      </nav>
+    </div>
+
+    <header class="page-head">
+      <div class="eyebrow">Topic 16 of 21</div>
+      <h1>Fetch, JSON &amp; APIs</h1>
+      <p class="tagline">Requesting data from a server with fetch(), and converting between JavaScript objects and JSON text.</p>
+    </header>
+
+    <div class="workspace">
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-notes"></span>NOTES.md</div>
+        <div class="pane-body notes">
+          
+<h2>fetch basics</h2>
+<pre><code><span class="tok-kw">const</span> res = <span class="tok-kw">await</span> fetch(url);
+<span class="tok-kw">if</span> (!res.ok) <span class="tok-kw">throw new</span> Error(<span class="tok-str">`HTTP ${res.status}`</span>);
+<span class="tok-kw">const</span> data = <span class="tok-kw">await</span> res.json();</code></pre>
+<p><code>fetch</code> only rejects on network failure — a 404 or 500 still resolves, so always check
+<code>res.ok</code> or <code>res.status</code> yourself.</p>
+<h2>JSON conversion</h2>
+<pre><code>JSON.stringify(obj);  <span class="tok-com">// JS value -&gt; JSON string</span>
+JSON.parse(text);     <span class="tok-com">// JSON string -&gt; JS value</span></code></pre>
+<h2>Sending data</h2>
+<pre><code>fetch(url, {
+  method: <span class="tok-str">"POST"</span>,
+  headers: { <span class="tok-str">"Content-Type"</span>: <span class="tok-str">"application/json"</span> },
+  body: JSON.stringify(payload)
+});</code></pre>
+
+        </div>
+      </section>
+
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-console"></span>console — script.js</div>
+        <div class="controls">
+          
+        <button class="primary" data-action="fetch-get">Fetch a real API (GET)</button>
+        <div class="field">
+          <label for="j-input">JSON text</label>
+          <textarea id="j-input" rows="3" style="min-width:260px;">{"name":"Ada","skills":["JS","Math"]}</textarea>
+        </div>
+        <button data-action="json-parse">JSON.parse it</button>
+
+          <button id="clear-btn">Clear console</button>
+        </div>
+        <div class="console" id="output-log">
+          
+          <p class="console-empty">Run a demo above to see output here.</p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="page-foot">javascript_core_practicals / 16-fetch-json-api — built with HTML, CSS &amp; vanilla JavaScript</footer>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

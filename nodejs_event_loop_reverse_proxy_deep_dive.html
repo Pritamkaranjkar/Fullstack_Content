@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Node.js Deep Dive — Event Loop & Reverse Proxy</title>
+  <style>
+    :root{
+      --bg:#0b0d10; --panel:#11151a; --panel2:#171c22; --text:#eef2f6;
+      --muted:#9aa5b1; --line:#27303a; --accent:#7dd3fc; --accent2:#a7f3d0;
+      --warn:#fcd34d; --danger:#fb7185; --shadow:0 18px 60px rgba(0,0,0,.28);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(180deg,#090b0e,#0d1116 35%,#0b0d10);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    .topbar{position:sticky;top:0;z-index:100;background:rgba(9,11,14,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1400px;margin:auto;padding:12px 24px;display:flex;align-items:center;gap:18px}
+    .brand{font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+    .brand span{color:var(--accent)}
+    .progress-wrap{height:3px;background:#161b20;flex:1;border-radius:99px;overflow:hidden}
+    .progress{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+    .layout{max-width:1400px;margin:auto;display:grid;grid-template-columns:270px minmax(0,1fr);gap:34px;padding:34px 24px}
+    aside{position:sticky;top:70px;height:calc(100vh - 90px);overflow:auto;padding-right:8px}
+    aside h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:8px 0 14px}
+    .toc a{display:block;color:#aeb8c3;text-decoration:none;padding:8px 12px;border-radius:10px;font-size:.91rem}
+    .toc a:hover,.toc a.active{background:#171d24;color:white}
+    main{min-width:0}
+    .hero{padding:44px 0 55px;max-width:1000px}
+    .eyebrow{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:.78rem}
+    h1{font-size:clamp(2.7rem,6vw,5.4rem);line-height:.98;letter-spacing:-.065em;margin:16px 0 24px;max-width:1000px}
+    .hero p{font-size:1.18rem;color:#b5bec8;max-width:800px}
+    .hero-tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}
+    .tag{border:1px solid var(--line);background:#10151a;padding:7px 12px;border-radius:999px;color:#c9d2dc;font-size:.82rem}
+    section{scroll-margin-top:95px;margin:0 0 70px}
+    h2{font-size:clamp(1.8rem,3vw,2.7rem);letter-spacing:-.04em;line-height:1.1;margin:0 0 12px}
+    h3{letter-spacing:-.02em}
+    .lead{color:var(--muted);max-width:850px}
+    .card{background:linear-gradient(180deg,#12171d,#101419);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin:18px 0}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .concept{min-height:190px}
+    .concept .num{font-size:.76rem;color:var(--accent);font-weight:800;letter-spacing:.12em}
+    .concept p,.card p,.card li{color:#b5bec8}
+    .diagram{background:#080a0d;border:1px solid #222a33;border-radius:16px;padding:22px;overflow:auto}
+    .node{border:1px solid #3a4652;background:#141a20;border-radius:14px;padding:13px 16px;text-align:center;min-width:150px}
+    .node strong{display:block}.node small{color:var(--muted)}
+    .flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+    .arrow{color:var(--accent);font-size:1.5rem}
+    .stack{display:flex;flex-direction:column;gap:9px;align-items:center}
+    pre{margin:0;background:#090b0e;border:1px solid #242c35;border-radius:13px;padding:18px;overflow:auto;color:#d9e2ec;font-size:.9rem}
+    code{font-family:"SFMono-Regular",Consolas,monospace}
+    .code-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:#8793a0;font-size:.8rem}
+    .copy{border:1px solid var(--line);background:#151b21;color:#cbd5df;border-radius:8px;padding:5px 9px}
+    .timeline{display:grid;gap:10px}
+    .step{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start}
+    .step-no{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#19222b;color:var(--accent);font-weight:800;border:1px solid #34414d}
+    .step-body{border-left:1px solid #2b353f;padding:2px 0 14px 16px}
+    .interactive{border:1px solid #34404c;background:#0d1217;border-radius:18px;padding:20px;margin-top:20px}
+    .controls{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+    .btn{border:1px solid #34404c;background:#171e25;color:#e8edf2;border-radius:10px;padding:9px 13px;transition:.2s}
+    .btn:hover{transform:translateY(-1px);border-color:#617080}
+    .btn.primary{background:#dff7ff;color:#081116;border-color:#dff7ff;font-weight:750}
+    .btn.danger{border-color:#6a303b;color:#fecdd3}
+    .event-sim{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+    .sim-panel{background:#090c10;border:1px solid #252e38;border-radius:14px;padding:16px}
+    .queue{min-height:52px;display:flex;gap:8px;flex-wrap:wrap}
+    .pill{padding:6px 10px;border-radius:8px;background:#18212a;border:1px solid #34404b;font-size:.78rem}
+    .pill.ready{border-color:#65a8c3}.pill.done{opacity:.45;text-decoration:line-through}
+    .explain{background:#101820;border-left:3px solid var(--accent);padding:14px 16px;border-radius:0 12px 12px 0;color:#c8d4de;margin-top:14px}
+    .tooltip{position:relative;border-bottom:1px dashed var(--accent);color:#e9f8ff;cursor:help}
+    .tooltip:hover::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 8px);width:280px;background:#05070a;color:#e8eef4;border:1px solid #34404c;border-radius:10px;padding:10px;z-index:20;font-size:.8rem;box-shadow:var(--shadow)}
+    .phase{border:1px solid var(--line);background:#11171d;border-radius:13px;padding:15px;transition:.25s}
+    .phase.active{border-color:var(--accent);box-shadow:0 0 0 1px rgba(125,211,252,.15),0 0 30px rgba(125,211,252,.08)}
+    .phase h4{margin:0 0 5px}.phase p{font-size:.87rem;margin:0}
+    .quiz button{display:block;width:100%;text-align:left;margin:8px 0}
+    .answer{display:none;padding:12px;background:#10191d;border-radius:10px;color:#bfead8}.answer.show{display:block}
+    .callout{border:1px solid #51461d;background:#18160e;color:#e9d99c;border-radius:14px;padding:17px}
+    .danger-box{border-color:#542b35;background:#180f12;color:#f5c1ca}
+    .table-wrap{overflow:auto}
+    table{width:100%;border-collapse:collapse;min-width:620px}
+    th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left}th{color:#dfe8ef}td{color:#aeb9c4}
+    .architecture{display:grid;gap:10px;justify-items:center}
+    .layer{width:min(760px,100%);padding:16px;border:1px solid var(--line);background:#11171d;border-radius:14px;text-align:center}
+    .layer.proxy{border-color:#536d7d}.layer.nodejs{border-color:#56796d}.layer.db{border-color:#665f49}
+    .legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.8rem}
+    .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px}
+    footer{border-top:1px solid var(--line);padding:35px 0;color:#7f8a96}
+    .search{width:100%;padding:10px 12px;border:1px solid var(--line);background:#0d1217;color:white;border-radius:10px;margin-bottom:12px}
+    .hidden{display:none}
+    @media(max-width:1000px){.layout{grid-template-columns:1fr}aside{display:none}.grid,.grid3,.event-sim{grid-template-columns:1fr}}
+    @media(max-width:600px){.layout{padding:22px 15px}.hero{padding-top:20px}.card{padding:18px}h1{font-size:3rem}.topbar-inner{padding:10px 15px}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Node.js <span>Deep Dive</span></div>
+    <div class="progress-wrap"><div id="progress" class="progress"></div></div>
+    <span id="progressText" style="font-size:.75rem;color:#8f9ba7">0%</span>
+  </div>
+</header>
+
+<div class="layout">
+  <aside>
+    <input class="search" id="tocSearch" placeholder="Search topics..." />
+    <h3>Course map</h3>
+    <nav class="toc" id="toc">
+      <a href="#start">01 · Big Picture</a>
+      <a href="#node">02 · What Node.js Is</a>
+      <a href="#architecture">03 · Node Architecture</a>
+      <a href="#event-loop">04 · Event Loop</a>
+      <a href="#async">05 · Async I/O</a>
+      <a href="#phases">06 · Event Loop Phases</a>
+      <a href="#microtasks">07 · Microtasks</a>
+      <a href="#blocking">08 · Blocking vs Non-blocking</a>
+      <a href="#http">09 · HTTP Request Journey</a>
+      <a href="#proxy">10 · Reverse Proxy</a>
+      <a href="#loadbalance">11 · Load Balancing</a>
+      <a href="#production">12 · Production Architecture</a>
+      <a href="#memory">13 · Redis & Shared State</a>
+      <a href="#summary">14 · Final Mental Model</a>
+      <a href="#quiz">15 · Knowledge Check</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section class="hero" id="start">
+      <div class="eyebrow">Backend fundamentals · visual lesson</div>
+      <h1>Node.js, the Event Loop & Reverse Proxy — properly understood.</h1>
+      <p>
+        A professional, interactive walkthrough of what happens between a browser,
+        Node.js, the Event Loop, asynchronous I/O, databases, Redis and a reverse proxy.
+        Use the simulations, hover explanations and step-by-step request journeys as you learn.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">V8</span><span class="tag">libuv</span><span class="tag">Event Loop</span>
+        <span class="tag">Async I/O</span><span class="tag">HTTP</span><span class="tag">Reverse Proxy</span>
+        <span class="tag">Load Balancing</span><span class="tag">Redis</span>
+      </div>
+    </section>
+
+    <section id="node">
+      <h2>02 · What exactly is Node.js?</h2>
+      <p class="lead">Node.js lets you execute JavaScript outside the browser. It combines the V8 JavaScript engine with operating-system and networking capabilities.</p>
+      <div class="grid">
+        <div class="card concept"><div class="num">01 — RUNTIME</div><h3>JavaScript runtime</h3><p>Node is an environment in which JavaScript can run. It is not a new language. Your JavaScript is executed by V8.</p></div>
+        <div class="card concept"><div class="num">02 — SYSTEM ACCESS</div><h3>Backend capabilities</h3><p>Node exposes APIs for HTTP, files, processes, streams, timers, networking and other server-side tasks.</p></div>
+        <div class="card concept"><div class="num">03 — ASYNC MODEL</div><h3>Non-blocking I/O</h3><p>Node is designed so your JavaScript does not have to sit idle while network or I/O operations are in progress.</p></div>
+        <div class="card concept"><div class="num">04 — IMPORTANT LIMIT</div><h3>Not “single-threaded everything”</h3><p>The JavaScript execution model is centered around one main thread per Node process, while Node/libuv and the OS can perform other work outside that JavaScript execution path.</p></div>
+      </div>
+      <div class="card">
+        <div class="code-label"><span>Minimal HTTP server</span><button class="copy" data-copy="nodeCode">Copy</button></div>
+        <pre id="nodeCode"><code>const http = require("http");
+
+const server = http.createServer((req, res) => {
+  res.end("Hello from Node.js");
+});
+
+server.listen(3000, () => {
+  console.log("Server listening on port 3000");
+});</code></pre>
+        <div class="explain"><strong>What happened?</strong> Node creates a server, starts listening on port 3000, and invokes your request handler when an HTTP request is ready to be processed.</div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <h2>03 · Node.js architecture</h2>
+      <p class="lead">Keep these layers separate. This prevents the common misconception that “the Event Loop does everything.”</p>
+      <div class="diagram">
+        <div class="flow">
+          <div class="node"><strong>Your JS</strong><small>application code</small></div><div class="arrow">→</div>
+          <div class="node"><strong>V8</strong><small>executes JS</small></div><div class="arrow">→</div>
+          <div class="node"><strong>Node APIs</strong><small>HTTP, fs, timers...</small></div><div class="arrow">→</div>
+          <div class="node"><strong>libuv / OS</strong><small>async infrastructure</small></div>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="card"><h3>V8</h3><p>The JavaScript engine used by Node.js. It parses, compiles and executes JavaScript.</p></div>
+        <div class="card"><h3>Event Loop</h3><p>Coordinates when callbacks and other eligible work get a chance to execute on the JavaScript thread.</p></div>
+        <div class="card"><h3>libuv</h3><p>Provides Node with a cross-platform asynchronous I/O layer and a thread pool used by certain operations.</p></div>
+      </div>
+    </section>
+
+    <section id="event-loop">
+      <h2>04 · The Event Loop</h2>
+      <p class="lead">The Event Loop is the heart of Node's asynchronous programming model. It lets one JavaScript thread keep moving instead of waiting synchronously for every I/O operation.</p>
+      <div class="interactive">
+        <h3>Interactive Event Loop Simulator</h3>
+        <p style="color:#9aa5b1">Add work, then step through the simplified lifecycle. Watch the call stack, I/O queue and timer become ready.</p>
+        <div class="controls">
+          <button class="btn primary" id="runSim">Run simulation</button>
+          <button class="btn" id="stepSim">Next step</button>
+          <button class="btn" id="resetSim">Reset</button>
+        </div>
+        <div class="event-sim">
+          <div class="sim-panel">
+            <h4>JavaScript / Call Stack</h4><div id="stack" class="queue"></div>
+            <h4>Pending work</h4><div id="pending" class="queue"></div>
+          </div>
+          <div class="sim-panel">
+            <h4>Event Loop status</h4><div id="simStatus" class="explain">Ready. Click “Run simulation”.</div>
+            <h4>Completed</h4><div id="completed" class="queue"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>The core idea</h3>
+        <div class="timeline">
+          <div class="step"><div class="step-no">1</div><div class="step-body"><strong>Run synchronous JavaScript.</strong><br><span style="color:#9aa5b1">The current JavaScript execution must finish before the main thread can move on.</span></div></div>
+          <div class="step"><div class="step-no">2</div><div class="step-body"><strong>Start asynchronous work.</strong><br><span style="color:#9aa5b1">For example, initiate a network request. Node does not need to freeze the JavaScript thread waiting for the remote system.</span></div></div>
+          <div class="step"><div class="step-no">3</div><div class="step-body"><strong>Continue doing other JavaScript work.</strong><br><span style="color:#9aa5b1">Other requests can be processed while the I/O operation is pending.</span></div></div>
+          <div class="step"><div class="step-no">4</div><div class="step-body"><strong>Operation completes.</strong><br><span style="color:#9aa5b1">The relevant callback/promise continuation becomes eligible to run.</span></div></div>
+          <div class="step"><div class="step-no">5</div><div class="step-body"><strong>Event Loop gives JavaScript a turn.</strong><br><span style="color:#9aa5b1">The continuation executes and your code sends the response or continues the workflow.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="async">
+      <h2>05 · Async I/O: the request does not “wait” the way you think</h2>
+      <div class="card">
+        <div class="code-label"><span>Database-style example</span><button class="copy" data-copy="dbCode">Copy</button></div>
+        <pre id="dbCode"><code>app.get("/users", async (req, res) => {
+  const users = await db.query("SELECT * FROM users");
+  res.json(users);
+});</code></pre>
+        <div class="explain">
+          <strong>Important:</strong> <code>await</code> suspends the current async function's continuation until the Promise settles; it does not mean the entire Node process synchronously freezes waiting for the database.
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card"><h3>While DB request is pending</h3><p>Node can process other incoming events and run other ready JavaScript. The database server is doing database work independently.</p></div>
+        <div class="card"><h3>When DB finishes</h3><p>The Promise settles. The continuation after <code>await</code> becomes eligible to run, and eventually your response code executes.</p></div>
+      </div>
+      <div class="callout"><strong>Rule:</strong> Node's strength is not “JavaScript is magically parallel.” Its strength is avoiding unnecessary blocking while waiting for I/O.</div>
+    </section>
+
+    <section id="phases">
+      <h2>06 · Event Loop phases</h2>
+      <p class="lead">A simplified mental model of Node's loop is enough for most backend work. The real implementation has more detail, but these phases explain the common behavior.</p>
+      <div class="grid3" id="phasesGrid">
+        <div class="phase" data-phase="timers"><h4>Timers</h4><p>Handles callbacks whose timers have become eligible, such as <code>setTimeout()</code> and <code>setInterval()</code>.</p></div>
+        <div class="phase" data-phase="pending"><h4>Pending callbacks</h4><p>Processes certain callbacks deferred from previous operations.</p></div>
+        <div class="phase" data-phase="poll"><h4>Poll</h4><p>Processes I/O-related callbacks and may wait for I/O when appropriate.</p></div>
+        <div class="phase" data-phase="check"><h4>Check</h4><p>Runs <code>setImmediate()</code> callbacks.</p></div>
+        <div class="phase" data-phase="close"><h4>Close callbacks</h4><p>Handles some close events, such as socket close callbacks.</p></div>
+        <div class="phase"><h4>Microtasks</h4><p>Promise reactions and Node's <code>process.nextTick()</code> mechanism have special scheduling behavior and should be understood separately.</p></div>
+      </div>
+      <div class="interactive">
+        <h3>Phase explorer</h3>
+        <div class="controls">
+          <button class="btn phaseBtn" data-target="timers">Timers</button>
+          <button class="btn phaseBtn" data-target="pending">Pending</button>
+          <button class="btn phaseBtn" data-target="poll">Poll</button>
+          <button class="btn phaseBtn" data-target="check">Check</button>
+          <button class="btn phaseBtn" data-target="close">Close</button>
+        </div>
+        <div id="phaseExplain" class="explain">Select a phase to highlight it and see what belongs there.</div>
+      </div>
+    </section>
+
+    <section id="microtasks">
+      <h2>07 · Microtasks: Promise callbacks and nextTick</h2>
+      <div class="card">
+        <pre><code>console.log("A");
+
+Promise.resolve().then(() => {
+  console.log("B");
+});
+
+setTimeout(() => {
+  console.log("C");
+}, 0);
+
+console.log("D");</code></pre>
+        <div class="explain"><strong>Typical output:</strong> A → D → B → C. Synchronous code finishes first; Promise reaction work is handled as microtask work before the timer callback gets its turn.</div>
+      </div>
+      <div class="grid">
+        <div class="card"><h3>Microtask</h3><p>Promise reactions are scheduled as microtasks. They are not simply another ordinary timer callback.</p></div>
+        <div class="card"><h3>process.nextTick()</h3><p>Node gives <code>process.nextTick()</code> special treatment. Excessive recursive nextTick scheduling can starve I/O, so use it carefully.</p></div>
+      </div>
+    </section>
+
+    <section id="blocking">
+      <h2>08 · Blocking vs non-blocking</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Non-blocking style</h3>
+          <pre><code>const fs = require("fs");
+
+fs.readFile("large.txt", "utf8", (err, data) => {
+  console.log(data);
+});
+
+console.log("Server can keep moving");</code></pre>
+          <p>The file operation is initiated and its callback runs later. The current JavaScript execution can continue.</p>
+        </div>
+        <div class="card">
+          <h3>Blocking style</h3>
+          <pre><code>const fs = require("fs");
+
+const data =
+  fs.readFileSync("large.txt", "utf8");
+
+console.log(data);</code></pre>
+          <p>The synchronous call keeps the JavaScript execution occupied until it completes. On a server, repeated blocking operations can damage throughput.</p>
+        </div>
+      </div>
+      <div class="danger-box callout"><strong>Important:</strong> “Node is single-threaded” does not mean “Node can never use other threads.” It means your main JavaScript execution model is centered on one thread per process. Worker threads and libuv's worker pool exist for specific workloads.</div>
+    </section>
+
+    <section id="http">
+      <h2>09 · What happens to an HTTP request?</h2>
+      <div class="architecture">
+        <div class="layer"><strong>1. Browser / Client</strong><br><span style="color:#8e9aa6">GET https://example.com/users</span></div>
+        <div>↓</div>
+        <div class="layer"><strong>2. Network + Operating System</strong><br><span style="color:#8e9aa6">Connection reaches the server.</span></div>
+        <div>↓</div>
+        <div class="layer nodejs"><strong>3. Node.js HTTP server</strong><br><span style="color:#8e9aa6">Node receives the request and your handler runs.</span></div>
+        <div>↓</div>
+        <div class="layer"><strong>4. Application logic</strong><br><span style="color:#8e9aa6">Validate → authenticate → query → transform → respond.</span></div>
+        <div>↓</div>
+        <div class="layer db"><strong>5. Database / Redis / external services</strong><br><span style="color:#8e9aa6">I/O happens outside the main JavaScript execution path.</span></div>
+        <div>↓</div>
+        <div class="layer"><strong>6. Response</strong><br><span style="color:#8e9aa6">Node writes the HTTP response back to the client.</span></div>
+      </div>
+    </section>
+
+    <section id="proxy">
+      <h2>10 · Reverse Proxy</h2>
+      <p class="lead">A reverse proxy sits in front of your application servers. The client talks to the proxy; the proxy talks to your internal application.</p>
+      <div class="diagram">
+        <div class="flow">
+          <div class="node"><strong>Browser</strong><small>example.com</small></div><div class="arrow">→</div>
+          <div class="node"><strong>Reverse Proxy</strong><small>public entry point</small></div><div class="arrow">→</div>
+          <div class="node"><strong>Node.js</strong><small>internal :3000</small></div>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="card"><h3>TLS / HTTPS</h3><p>The proxy can terminate HTTPS and forward traffic to an internal application connection.</p></div>
+        <div class="card"><h3>Routing</h3><p>It can route different paths or hosts to different backend services.</p></div>
+        <div class="card"><h3>Load balancing</h3><p>It can distribute traffic across multiple application instances.</p></div>
+        <div class="card"><h3>Static assets</h3><p>It can serve static content without involving Node for every request.</p></div>
+        <div class="card"><h3>Headers & limits</h3><p>It can apply request-size limits, headers, compression and related edge controls.</p></div>
+        <div class="card"><h3>Isolation</h3><p>Your Node process can remain on a private port/network while the proxy exposes the public interface.</p></div>
+      </div>
+      <div class="interactive">
+        <h3>Reverse proxy routing simulator</h3>
+        <p style="color:#9aa5b1">Choose a request. The proxy decides which backend receives it.</p>
+        <div class="controls">
+          <button class="btn routeBtn" data-route="/api/users">/api/users</button>
+          <button class="btn routeBtn" data-route="/api/properties">/api/properties</button>
+          <button class="btn routeBtn" data-route="/images/house.webp">/images/house.webp</button>
+          <button class="btn routeBtn" data-route="/admin">/admin</button>
+        </div>
+        <div id="routeResult" class="explain">Waiting for a route...</div>
+      </div>
+    </section>
+
+    <section id="loadbalance">
+      <h2>11 · Reverse proxy + load balancing</h2>
+      <div class="diagram">
+        <div class="node" style="margin:auto"><strong>Internet</strong><small>many clients</small></div>
+        <div style="text-align:center;padding:10px">↓</div>
+        <div class="node" style="margin:auto;border-color:#536d7d"><strong>Reverse Proxy / Load Balancer</strong><small>public gateway</small></div>
+        <div style="text-align:center;padding:10px">↓</div>
+        <div class="flow">
+          <div class="node"><strong>Node #1</strong><small>:3000</small></div>
+          <div class="node"><strong>Node #2</strong><small>:3001</small></div>
+          <div class="node"><strong>Node #3</strong><small>:3002</small></div>
+        </div>
+      </div>
+      <div class="interactive">
+        <h3>Send 12 requests</h3>
+        <button class="btn primary" id="sendRequests">Send requests</button>
+        <button class="btn" id="resetRequests">Reset</button>
+        <div class="grid3" style="margin-top:15px">
+          <div class="card"><h4>Node #1</h4><div id="n1">0 requests</div></div>
+          <div class="card"><h4>Node #2</h4><div id="n2">0 requests</div></div>
+          <div class="card"><h4>Node #3</h4><div id="n3">0 requests</div></div>
+        </div>
+        <div id="lbExplain" class="explain">The proxy can distribute requests across available instances.</div>
+      </div>
+    </section>
+
+    <section id="production">
+      <h2>12 · Full production architecture</h2>
+      <div class="diagram">
+        <div class="architecture">
+          <div class="layer"><strong>Users / Browsers</strong><br><span style="color:#8e9aa6">HTTPS requests</span></div>
+          <div>↓</div>
+          <div class="layer proxy"><strong>CDN / Edge / Reverse Proxy / Load Balancer</strong><br><span style="color:#8e9aa6">TLS · routing · caching · load balancing · limits</span></div>
+          <div>↓</div>
+          <div class="flow">
+            <div class="layer nodejs"><strong>Node process #1</strong><br><span style="color:#8e9aa6">Event Loop</span></div>
+            <div class="layer nodejs"><strong>Node process #2</strong><br><span style="color:#8e9aa6">Event Loop</span></div>
+            <div class="layer nodejs"><strong>Node process #3</strong><br><span style="color:#8e9aa6">Event Loop</span></div>
+          </div>
+          <div>↓</div>
+          <div class="flow">
+            <div class="layer"><strong>Redis</strong><br><span style="color:#8e9aa6">cache · sessions · queues</span></div>
+            <div class="layer db"><strong>Database</strong><br><span style="color:#8e9aa6">persistent application data</span></div>
+            <div class="layer"><strong>External APIs</strong><br><span style="color:#8e9aa6">payments · maps · email etc.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Who does what?</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Component</th><th>Primary responsibility</th><th>Think of it as</th></tr></thead>
+            <tbody>
+              <tr><td>V8</td><td>Execute JavaScript</td><td>JS engine</td></tr>
+              <tr><td>Node.js</td><td>Runtime + server APIs</td><td>Server-side JS environment</td></tr>
+              <tr><td>Event Loop</td><td>Coordinate asynchronous callbacks/work</td><td>Traffic coordinator for JS execution</td></tr>
+              <tr><td>libuv</td><td>Async I/O infrastructure</td><td>Low-level async support layer</td></tr>
+              <tr><td>Reverse proxy</td><td>Public gateway, routing, TLS, balancing</td><td>Front door</td></tr>
+              <tr><td>Redis</td><td>Fast shared data/cache</td><td>External in-memory store</td></tr>
+              <tr><td>Database</td><td>Persistent data</td><td>System of record</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="memory">
+      <h2>13 · Why Redis matters when you have multiple Node processes</h2>
+      <div class="diagram">
+        <div class="flow">
+          <div class="node"><strong>Node #1</strong><small>its own process memory</small></div>
+          <div class="node"><strong>Node #2</strong><small>different process memory</small></div>
+          <div class="node"><strong>Node #3</strong><small>different process memory</small></div>
+        </div>
+        <div style="text-align:center;padding:16px">↓ shared external state</div>
+        <div class="node" style="margin:auto"><strong>Redis</strong><small>shared cache / sessions / temporary state</small></div>
+      </div>
+      <div class="card">
+        <p>If you keep a variable in Node process memory, another Node process does not automatically see it. This matters once you scale to multiple instances.</p>
+        <pre><code>// Process #1
+let count = 10;
+
+// Process #2
+// `count` is not automatically the same variable.</code></pre>
+        <p>External stores such as Redis can provide shared state when the application architecture needs it.</p>
+      </div>
+    </section>
+
+    <section id="summary">
+      <h2>14 · Final mental model</h2>
+      <div class="card">
+        <div class="timeline">
+          <div class="step"><div class="step-no">1</div><div class="step-body"><strong>User sends request.</strong><br><span style="color:#9aa5b1">The public request reaches your infrastructure.</span></div></div>
+          <div class="step"><div class="step-no">2</div><div class="step-body"><strong>Reverse proxy receives it.</strong><br><span style="color:#9aa5b1">It can terminate HTTPS, apply edge rules and choose a backend.</span></div></div>
+          <div class="step"><div class="step-no">3</div><div class="step-body"><strong>Node receives the request.</strong><br><span style="color:#9aa5b1">Your JavaScript handler runs on the Node process's main JavaScript execution thread.</span></div></div>
+          <div class="step"><div class="step-no">4</div><div class="step-body"><strong>Node starts I/O.</strong><br><span style="color:#9aa5b1">Database/network/file operations can proceed asynchronously rather than blocking the JS thread.</span></div></div>
+          <div class="step"><div class="step-no">5</div><div class="step-body"><strong>Event Loop keeps processing eligible work.</strong><br><span style="color:#9aa5b1">Other requests can make progress while I/O is pending.</span></div></div>
+          <div class="step"><div class="step-no">6</div><div class="step-body"><strong>I/O completes.</strong><br><span style="color:#9aa5b1">The relevant callback or Promise continuation becomes ready.</span></div></div>
+          <div class="step"><div class="step-no">7</div><div class="step-body"><strong>Node produces response.</strong><br><span style="color:#9aa5b1">The response travels back through the proxy to the user.</span></div></div>
+        </div>
+      </div>
+      <div class="callout"><strong>Remember:</strong> Reverse proxy ≠ Event Loop. The reverse proxy manages traffic at the server boundary. The Event Loop manages asynchronous JavaScript execution inside a Node process.</div>
+    </section>
+
+    <section id="quiz">
+      <h2>15 · Knowledge check</h2>
+      <div class="card quiz">
+        <h3>Question 1</h3>
+        <p>What is Node.js?</p>
+        <button class="btn" data-answer="q1a">A. A JavaScript runtime</button>
+        <button class="btn" data-answer="q1b">B. A database</button>
+        <button class="btn" data-answer="q1c">C. A reverse proxy</button>
+        <div id="q1a" class="answer">Correct. Node.js is a JavaScript runtime built around V8 and additional server-side capabilities.</div>
+        <div id="q1b" class="answer">Not quite. Databases store and query persistent data.</div>
+        <div id="q1c" class="answer">Not quite. A reverse proxy is a separate infrastructure component.</div>
+      </div>
+      <div class="card quiz">
+        <h3>Question 2</h3>
+        <p>What is the Event Loop primarily responsible for?</p>
+        <button class="btn" data-answer="q2a">A. Storing database records</button>
+        <button class="btn" data-answer="q2b">B. Coordinating asynchronous work and callback execution</button>
+        <button class="btn" data-answer="q2c">C. Encrypting every HTTP request</button>
+        <div id="q2a" class="answer">No. Persistent storage is a database concern.</div>
+        <div id="q2b" class="answer">Correct. It coordinates when eligible JavaScript callbacks and related work get executed.</div>
+        <div id="q2c" class="answer">No. HTTPS/TLS can be handled by application or edge infrastructure.</div>
+      </div>
+      <div class="card quiz">
+        <h3>Question 3</h3>
+        <p>Why put a reverse proxy in front of Node?</p>
+        <button class="btn" data-answer="q3a">A. To replace JavaScript</button>
+        <button class="btn" data-answer="q3b">B. To provide a public gateway for routing, TLS, balancing and related edge concerns</button>
+        <button class="btn" data-answer="q3c">C. To make the database unnecessary</button>
+        <div id="q3a" class="answer">No. Node still runs the application.</div>
+        <div id="q3b" class="answer">Correct. This is a major reason reverse proxies are used in production.</div>
+        <div id="q3c" class="answer">No. The application may still require a database.</div>
+      </div>
+    </section>
+
+    <footer>
+      <strong>Study path:</strong> JavaScript fundamentals → async/Promises → Node.js modules → HTTP → Event Loop → Express/Fastify → databases → Redis → reverse proxy → deployment → observability.
+      <br><br>Built as a self-contained teaching page. No external libraries required.
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Reading progress
+  const progress = document.getElementById("progress");
+  const progressText = document.getElementById("progressText");
+  window.addEventListener("scroll", () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const pct = max ? Math.round((scrollY / max) * 100) : 0;
+    progress.style.width = pct + "%";
+    progressText.textContent = pct + "%";
+  });
+
+  // Copy buttons
+  document.querySelectorAll(".copy").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const text = document.getElementById(btn.dataset.copy).innerText;
+      await navigator.clipboard.writeText(text);
+      const old = btn.textContent;
+      btn.textContent = "Copied";
+      setTimeout(() => btn.textContent = old, 1200);
+    });
+  });
+
+  // TOC search
+  document.getElementById("tocSearch").addEventListener("input", e => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll("#toc a").forEach(a => {
+      a.classList.toggle("hidden", !a.textContent.toLowerCase().includes(q));
+    });
+  });
+
+  // Event Loop simulator
+  const sim = {
+    steps: [
+      ["Start", "Synchronous JavaScript begins. The main call stack is executing your code.", "main()"],
+      ["Start async I/O", "A database/network operation is initiated. Node does not synchronously wait for its result.", "db.query()"],
+      ["Keep moving", "The JavaScript thread can process another ready request while the I/O operation is pending.", "request-2"],
+      ["I/O complete", "The external operation completes. Its continuation is now eligible to be processed.", "db-callback"],
+      ["Run continuation", "The Event Loop gives JavaScript a turn and the continuation executes.", "res.json()"],
+      ["Finish", "The HTTP response is written back to the client.", "response"]
+    ],
+    i: -1
+  };
+  const stackEl = document.getElementById("stack");
+  const pendingEl = document.getElementById("pending");
+  const completedEl = document.getElementById("completed");
+  const statusEl = document.getElementById("simStatus");
+
+  function renderSim(){
+    stackEl.innerHTML = "";
+    pendingEl.innerHTML = "";
+    completedEl.innerHTML = "";
+    if(sim.i < 0){
+      statusEl.textContent = "Ready. Click “Run simulation” or “Next step”.";
+      return;
+    }
+    const [name, desc, work] = sim.steps[sim.i];
+    const stack = document.createElement("span");
+    stack.className = "pill ready";
+    stack.textContent = work;
+    stackEl.appendChild(stack);
+
+    if(sim.i >= 1 && sim.i < 4){
+      const io = document.createElement("span");
+      io.className = "pill";
+      io.textContent = sim.i < 3 ? "DB / Network I/O pending" : "I/O complete";
+      pendingEl.appendChild(io);
+    }
+    for(let j=0;j<sim.i;j++){
+      const done=document.createElement("span");
+      done.className="pill done";
+      done.textContent=sim.steps[j][2];
+      completedEl.appendChild(done);
+    }
+    statusEl.innerHTML = "<strong>" + name + "</strong><br>" + desc;
+  }
+  function nextSim(){
+    sim.i++;
+    if(sim.i >= sim.steps.length) sim.i = 0;
+    renderSim();
+  }
+  document.getElementById("stepSim").onclick = nextSim;
+  document.getElementById("runSim").onclick = () => {
+    sim.i = -1;
+    renderSim();
+    let count=0;
+    const timer=setInterval(()=>{
+      nextSim(); count++;
+      if(count >= sim.steps.length) clearInterval(timer);
+    },900);
+  };
+  document.getElementById("resetSim").onclick = () => {sim.i=-1;renderSim()};
+  renderSim();
+
+  // Phase explorer
+  const phaseText = {
+    timers:"Timers: timer callbacks become eligible here. A 0ms timeout is not a guarantee of immediate execution.",
+    pending:"Pending callbacks: certain deferred system/I/O callbacks can be processed here.",
+    poll:"Poll: Node processes I/O-related callbacks and can wait for I/O when appropriate.",
+    check:"Check: setImmediate() callbacks run here.",
+    close:"Close callbacks: certain close-related callbacks are handled here."
+  };
+  document.querySelectorAll(".phaseBtn").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll(".phase").forEach(p => p.classList.remove("active"));
+      const target = document.querySelector('[data-phase="' + btn.dataset.target + '"]');
+      target.classList.add("active");
+      document.getElementById("phaseExplain").textContent = phaseText[btn.dataset.target];
+    };
+  });
+
+  // Reverse proxy simulator
+  document.querySelectorAll(".routeBtn").forEach(btn => {
+    btn.onclick = () => {
+      const route = btn.dataset.route;
+      let destination, explanation;
+      if(route.startsWith("/api/users")) {
+        destination = "Node API cluster";
+        explanation = "The proxy forwards the API request to an application backend. Node handles authentication/business logic and may query Redis or the database.";
+      } else if(route.startsWith("/api/properties")) {
+        destination = "Node Property Service";
+        explanation = "The proxy sends the request to the backend service responsible for property APIs.";
+      } else if(route.startsWith("/images")) {
+        destination = "CDN / static asset layer";
+        explanation = "Static assets can often be served at the edge or by a static server, avoiding unnecessary application work.";
+      } else {
+        destination = "Admin application / protected route";
+        explanation = "The proxy can route this host/path differently and may apply access controls before forwarding.";
+      }
+      document.getElementById("routeResult").innerHTML =
+        "<strong>" + route + " → " + destination + "</strong><br>" + explanation;
+    };
+  });
+
+  // Load balancer simulation
+  let counts=[0,0,0];
+  document.getElementById("sendRequests").onclick = () => {
+    counts=[0,0,0];
+    let i=0;
+    const timer=setInterval(()=>{
+      counts[i%3]++;
+      document.getElementById("n1").textContent=counts[0]+" requests";
+      document.getElementById("n2").textContent=counts[1]+" requests";
+      document.getElementById("n3").textContent=counts[2]+" requests";
+      i++;
+      if(i>=12){
+        clearInterval(timer);
+        document.getElementById("lbExplain").textContent =
+          "Simulation complete: 12 requests were distributed round-robin across 3 Node instances. Real load balancers can use other strategies and health information.";
+      }
+    },180);
+  };
+  document.getElementById("resetRequests").onclick=()=>{
+    counts=[0,0,0];
+    ["n1","n2","n3"].forEach((id,i)=>document.getElementById(id).textContent="0 requests");
+    document.getElementById("lbExplain").textContent="The proxy can distribute requests across available instances.";
+  };
+
+  // Quiz
+  document.querySelectorAll(".quiz button").forEach(btn=>{
+    btn.onclick=()=>{
+      const card=btn.closest(".quiz");
+      card.querySelectorAll(".answer").forEach(a=>a.classList.remove("show"));
+      document.getElementById(btn.dataset.answer).classList.add("show");
+    };
+  });
+
+  // Active TOC
+  const links=[...document.querySelectorAll("#toc a")];
+  const sections=links.map(a=>document.querySelector(a.getAttribute("href"))).filter(Boolean);
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        links.forEach(a=>a.classList.remove("active"));
+        const active=document.querySelector('#toc a[href="#'+entry.target.id+'"]');
+        if(active) active.classList.add("active");
+      }
+    });
+  },{rootMargin:"-20% 0px -65% 0px"});
+  sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>

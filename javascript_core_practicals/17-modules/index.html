@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>17 · Modules — JS Core Practicals</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">js_core_practicals</div>
+      <p>21 self-contained exercises covering JavaScript from fundamentals to browser storage.</p>
+    </div>
+    <div class="sidebar-section-label">Explorer</div>
+    <ul class="file-tree">
+      <li><a class="" href="../01-javascript-fundamentals/index.html"><span class="num">01</span>JavaScript Fundamentals</a></li>
+<li><a class="" href="../02-variables-data-types/index.html"><span class="num">02</span>Variables &amp; Data Types</a></li>
+<li><a class="" href="../03-operators/index.html"><span class="num">03</span>Operators</a></li>
+<li><a class="" href="../04-conditions/index.html"><span class="num">04</span>Conditions</a></li>
+<li><a class="" href="../05-loops/index.html"><span class="num">05</span>Loops</a></li>
+<li><a class="" href="../06-functions/index.html"><span class="num">06</span>Functions</a></li>
+<li><a class="" href="../07-strings/index.html"><span class="num">07</span>Strings</a></li>
+<li><a class="" href="../08-arrays/index.html"><span class="num">08</span>Arrays</a></li>
+<li><a class="" href="../09-objects/index.html"><span class="num">09</span>Objects</a></li>
+<li><a class="" href="../10-scope-hoisting-closures/index.html"><span class="num">10</span>Scope, Hoisting &amp; Closures</a></li>
+<li><a class="" href="../11-dom-manipulation/index.html"><span class="num">11</span>DOM Manipulation</a></li>
+<li><a class="" href="../12-events/index.html"><span class="num">12</span>Events</a></li>
+<li><a class="" href="../13-forms-validation/index.html"><span class="num">13</span>Forms &amp; Validation</a></li>
+<li><a class="" href="../14-modern-javascript/index.html"><span class="num">14</span>Modern JavaScript (ES6+)</a></li>
+<li><a class="" href="../15-asynchronous-javascript/index.html"><span class="num">15</span>Asynchronous JavaScript</a></li>
+<li><a class="" href="../16-fetch-json-api/index.html"><span class="num">16</span>Fetch, JSON &amp; APIs</a></li>
+<li><a class="active" href="../17-modules/index.html"><span class="num">17</span>Modules</a></li>
+<li><a class="" href="../18-error-handling/index.html"><span class="num">18</span>Error Handling</a></li>
+<li><a class="" href="../19-javascript-runtime/index.html"><span class="num">19</span>JavaScript Runtime</a></li>
+<li><a class="" href="../20-object-oriented-javascript/index.html"><span class="num">20</span>Object-Oriented JavaScript</a></li>
+<li><a class="" href="../21-browser-storage/index.html"><span class="num">21</span>Browser Storage</a></li>
+    </ul>
+    <div class="sidebar-foot">
+      <div class="progress-label"><span>Progress</span><span>17 / 21</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:81%"></div></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="tabbar">
+      <div class="crumb">javascript_core_practicals<span class="sep">/</span><span class="current">17-modules</span><span class="sep">/</span>index.html</div>
+      <nav class="tab-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../16-fetch-json-api/index.html">&larr; Prev</a>
+        <a href="../18-error-handling/index.html">Next &rarr;</a>
+      </nav>
+    </div>
+
+    <header class="page-head">
+      <div class="eyebrow">Topic 17 of 21</div>
+      <h1>Modules</h1>
+      <p class="tagline">Splitting code across files with import/export, so each file has a single responsibility.</p>
+    </header>
+
+    <div class="workspace">
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-notes"></span>NOTES.md</div>
+        <div class="pane-body notes">
+          
+<h2>Exporting</h2>
+<pre><code><span class="tok-com">// math.js</span>
+<span class="tok-kw">export function</span> add(a, b) { <span class="tok-kw">return</span> a + b; }
+<span class="tok-kw">export const</span> PI = <span class="tok-num">3.14159</span>;
+<span class="tok-kw">export default function</span> multiply(a, b) { <span class="tok-kw">return</span> a * b; }</code></pre>
+<h2>Importing</h2>
+<pre><code><span class="tok-com">// script.js</span>
+<span class="tok-kw">import</span> multiply, { add, PI } <span class="tok-kw">from</span> <span class="tok-str">"./math.js"</span>;</code></pre>
+<h2>Loading a module in HTML</h2>
+<pre><code><span class="tok-kw">&lt;script</span> type=<span class="tok-str">"module"</span> src=<span class="tok-str">"script.js"</span><span class="tok-kw">&gt;&lt;/script&gt;</span></code></pre>
+<p>Modules are deferred automatically, run in strict mode, and have their own scope — nothing leaks to
+the global object unless explicitly exported.</p>
+
+        </div>
+      </section>
+
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-console"></span>console — script.js</div>
+        <div class="controls">
+          
+        <div class="field">
+          <label for="m-a">A</label>
+          <input type="number" id="m-a" value="6">
+        </div>
+        <div class="field">
+          <label for="m-b">B</label>
+          <input type="number" id="m-b" value="7">
+        </div>
+        <button class="primary" data-action="run-imports">Run imported functions</button>
+
+          <button id="clear-btn">Clear console</button>
+        </div>
+        <div class="console" id="output-log">
+          
+          <p class="console-empty">Run a demo above to see output here.</p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="page-foot">javascript_core_practicals / 17-modules — built with HTML, CSS &amp; vanilla JavaScript</footer>
+  </div>
+</div>
+<script type="module" src="script.js"></script>
+</body>
+</html>

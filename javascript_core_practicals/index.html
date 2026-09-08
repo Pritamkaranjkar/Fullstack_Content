@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Core Practicals</title>
+<link rel="stylesheet" href="_assets/style.css">
+<style>
+  body { display: block; }
+  .home-wrap { max-width: 1080px; margin: 0 auto; padding: 64px 28px 80px; }
+  .home-eyebrow { font-family: var(--font-mono); color: var(--accent); font-size: 13px; margin-bottom: 14px; }
+  .home-wrap h1 { font-size: 40px; margin: 0 0 14px; letter-spacing: -0.01em; }
+  .home-wrap > p { color: var(--text-dim); max-width: 62ch; font-size: 15.5px; margin: 0 0 40px; }
+  .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .topic-card {
+    display: flex; flex-direction: column; gap: 6px;
+    background: var(--bg-panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 18px; text-decoration: none;
+    transition: border-color .12s ease, transform .12s ease;
+  }
+  .topic-card:hover { border-color: var(--accent-dim); transform: translateY(-2px); text-decoration: none; }
+  .topic-num { font-family: var(--font-mono); color: var(--accent); font-size: 12px; }
+  .topic-title { color: var(--text); font-weight: 600; font-size: 15px; }
+  .topic-tagline { color: var(--text-dim); font-size: 12.5px; line-height: 1.5; }
+  .home-foot { margin-top: 48px; color: var(--text-faint); font-family: var(--font-mono); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="home-wrap">
+  <div class="home-eyebrow">javascript_core_practicals</div>
+  <h1>21 practicals, one JavaScript engine.</h1>
+  <p>A self-contained set of exercises taking JavaScript from <code>var</code> vs <code>let</code> all
+  the way to classes, async/await and browser storage. Every folder has its own
+  <code>index.html</code>, <code>style.css</code> and <code>script.js</code> — open any topic and
+  run the interactive demos directly in the console pane.</p>
+  <div class="topic-grid">
+    
+        <a class="topic-card" href="01-javascript-fundamentals/index.html">
+          <span class="topic-num">01</span>
+          <span class="topic-title">JavaScript Fundamentals</span>
+          <span class="topic-tagline">How JavaScript fits into a web page, how it runs, and the syntax rules everything else is built on.</span>
+        </a>
+
+        <a class="topic-card" href="02-variables-data-types/index.html">
+          <span class="topic-num">02</span>
+          <span class="topic-title">Variables &amp; Data Types</span>
+          <span class="topic-tagline">Declaring storage with var, let and const, and the eight data types JavaScript values can hold.</span>
+        </a>
+
+        <a class="topic-card" href="03-operators/index.html">
+          <span class="topic-num">03</span>
+          <span class="topic-title">Operators</span>
+          <span class="topic-tagline">Arithmetic, comparison, logical and the modern nullish/optional-chaining operators.</span>
+        </a>
+
+        <a class="topic-card" href="04-conditions/index.html">
+          <span class="topic-num">04</span>
+          <span class="topic-title">Conditions</span>
+          <span class="topic-tagline">Branching logic with if/else, switch, and the ternary operator.</span>
+        </a>
+
+        <a class="topic-card" href="05-loops/index.html">
+          <span class="topic-num">05</span>
+          <span class="topic-title">Loops</span>
+          <span class="topic-tagline">Repeating work with for, while, do-while, for...of, for...in, and controlling flow with break/continue.</span>
+        </a>
+
+        <a class="topic-card" href="06-functions/index.html">
+          <span class="topic-num">06</span>
+          <span class="topic-title">Functions</span>
+          <span class="topic-tagline">Declarations, expressions, arrow functions, default/rest parameters, callbacks and recursion.</span>
+        </a>
+
+        <a class="topic-card" href="07-strings/index.html">
+          <span class="topic-num">07</span>
+          <span class="topic-title">Strings</span>
+          <span class="topic-tagline">Template literals and the built-in methods for reading, searching and transforming text.</span>
+        </a>
+
+        <a class="topic-card" href="08-arrays/index.html">
+          <span class="topic-num">08</span>
+          <span class="topic-title">Arrays</span>
+          <span class="topic-tagline">Storing ordered lists of data and the methods that create, transform and search them.</span>
+        </a>
+
+        <a class="topic-card" href="09-objects/index.html">
+          <span class="topic-num">09</span>
+          <span class="topic-title">Objects</span>
+          <span class="topic-tagline">Grouping related data and behaviour as key-value pairs, and the modern syntax for working with them.</span>
+        </a>
+
+        <a class="topic-card" href="10-scope-hoisting-closures/index.html">
+          <span class="topic-num">10</span>
+          <span class="topic-title">Scope, Hoisting &amp; Closures</span>
+          <span class="topic-tagline">How JavaScript decides where a variable lives, why some declarations move, and how functions remember their birthplace.</span>
+        </a>
+
+        <a class="topic-card" href="11-dom-manipulation/index.html">
+          <span class="topic-num">11</span>
+          <span class="topic-title">DOM Manipulation</span>
+          <span class="topic-tagline">Selecting, creating, editing and removing elements to change what the page displays.</span>
+        </a>
+
+        <a class="topic-card" href="12-events/index.html">
+          <span class="topic-num">12</span>
+          <span class="topic-title">Events</span>
+          <span class="topic-tagline">Listening for user interaction, the event object, bubbling, and delegating events to a parent.</span>
+        </a>
+
+        <a class="topic-card" href="13-forms-validation/index.html">
+          <span class="topic-num">13</span>
+          <span class="topic-title">Forms &amp; Validation</span>
+          <span class="topic-tagline">Capturing form input, preventing default submission, and validating fields before they&#x27;re used.</span>
+        </a>
+
+        <a class="topic-card" href="14-modern-javascript/index.html">
+          <span class="topic-num">14</span>
+          <span class="topic-title">Modern JavaScript (ES6+)</span>
+          <span class="topic-tagline">A tour of the syntax that modernised JavaScript: destructuring, spread/rest, template literals and more.</span>
+        </a>
+
+        <a class="topic-card" href="15-asynchronous-javascript/index.html">
+          <span class="topic-num">15</span>
+          <span class="topic-title">Asynchronous JavaScript</span>
+          <span class="topic-tagline">Callbacks, Promises and async/await for work that finishes later — timers, network calls, files.</span>
+        </a>
+
+        <a class="topic-card" href="16-fetch-json-api/index.html">
+          <span class="topic-num">16</span>
+          <span class="topic-title">Fetch, JSON &amp; APIs</span>
+          <span class="topic-tagline">Requesting data from a server with fetch(), and converting between JavaScript objects and JSON text.</span>
+        </a>
+
+        <a class="topic-card" href="17-modules/index.html">
+          <span class="topic-num">17</span>
+          <span class="topic-title">Modules</span>
+          <span class="topic-tagline">Splitting code across files with import/export, so each file has a single responsibility.</span>
+        </a>
+
+        <a class="topic-card" href="18-error-handling/index.html">
+          <span class="topic-num">18</span>
+          <span class="topic-title">Error Handling</span>
+          <span class="topic-tagline">Catching problems gracefully with try/catch/finally, throwing your own errors, and error subclasses.</span>
+        </a>
+
+        <a class="topic-card" href="19-javascript-runtime/index.html">
+          <span class="topic-num">19</span>
+          <span class="topic-title">JavaScript Runtime</span>
+          <span class="topic-tagline">The call stack, Web APIs, callback queue and microtask queue — how single-threaded JS handles async work.</span>
+        </a>
+
+        <a class="topic-card" href="20-object-oriented-javascript/index.html">
+          <span class="topic-num">20</span>
+          <span class="topic-title">Object-Oriented JavaScript</span>
+          <span class="topic-tagline">Modeling data and behaviour with classes, inheritance, encapsulation and prototypes.</span>
+        </a>
+
+        <a class="topic-card" href="21-browser-storage/index.html">
+          <span class="topic-num">21</span>
+          <span class="topic-title">Browser Storage</span>
+          <span class="topic-tagline">Persisting data in the browser with localStorage and sessionStorage.</span>
+        </a>
+  </div>
+  <div class="home-foot">21 topics &middot; HTML + CSS + vanilla JavaScript &middot; no build step, no dependencies</div>
+</div>
+</body>
+</html>

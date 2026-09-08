@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Manipulation Practical</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="mainHeader">
+    <h1 id="pageTitle">DOM Manipulation</h1>
+    <p id="subtitle">Learn how JavaScript interacts with HTML.</p>
+  </header>
+
+  <main>
+    <!-- 1. Element Selection -->
+    <section class="card">
+      <h2>1. Selecting Elements</h2>
+      <p>JavaScript can select HTML elements using different DOM methods.</p>
+      <ul>
+        <li>getElementById()</li>
+        <li>querySelector()</li>
+        <li>querySelectorAll()</li>
+      </ul>
+      <button id="selectButton">Select Element</button>
+      <p id="selectOutput">Waiting...</p>
+    </section>
+
+    <!-- 2. Content Manipulation -->
+    <section class="card">
+      <h2>2. Changing Content</h2>
+      <p id="message">This text will be changed using JavaScript.</p>
+      <button id="textButton">Change Text</button>
+      <button id="htmlButton">Change HTML</button>
+    </section>
+
+    <!-- 3. Input -->
+    <section class="card">
+      <h2>3. Reading User Input</h2>
+      <label for="nameInput">Enter your name:</label>
+      <input type="text" id="nameInput" placeholder="Enter your name">
+      <button id="greetButton">Greet Me</button>
+      <p id="greeting">Your greeting will appear here.</p>
+    </section>
+
+    <!-- 4. Inline Styles -->
+    <section class="card">
+      <h2>4. Changing CSS</h2>
+      <div id="colorBox">Change my appearance</div>
+      <button id="colorButton">Change Color</button>
+      <button id="sizeButton">Increase Size</button>
+    </section>
+
+    <!-- 5. Classes -->
+    <section class="card">
+      <h2>5. Working With CSS Classes</h2>
+      <div id="classBox" class="box">I have a CSS class.</div>
+      <button id="addClassButton">Add Class</button>
+      <button id="removeClassButton">Remove Class</button>
+      <button id="toggleClassButton">Toggle Class</button>
+    </section>
+
+    <!-- 6. Attributes -->
+    <section class="card">
+      <h2>6. Working With Attributes</h2>
+      <a id="websiteLink" href="https://www.google.com" target="_blank">
+        Open Website
+      </a>
+      <div>
+        <button id="changeLinkButton">Change Link</button>
+        <button id="getAttributeButton">Read Link</button>
+      </div>
+      <p id="attributeOutput"></p>
+    </section>
+
+    <!-- 7. Creating Elements -->
+    <section class="card">
+      <h2>7. Creating Elements</h2>
+      <input type="text" id="itemInput" placeholder="Enter an item">
+      <button id="addItemButton">Add Item</button>
+      <ul id="itemList"></ul>
+    </section>
+
+    <!-- 8. Removing Elements -->
+    <section class="card">
+      <h2>8. Removing Elements</h2>
+      <div id="removeBox">Click the button to remove me.</div>
+      <button id="removeButton">Remove Element</button>
+    </section>
+
+    <!-- 9. DOM Traversal -->
+    <section class="card">
+      <h2>9. DOM Traversal</h2>
+      <div id="parentBox">
+        <h3>Parent Element</h3>
+        <p id="childParagraph">I am a child element.</p>
+      </div>
+      <button id="traversalButton">Find Parent</button>
+      <p id="traversalOutput"></p>
+    </section>
+
+    <!-- 10. Events -->
+    <section class="card">
+      <h2>10. Events</h2>
+      <button id="eventButton">Click Me</button>
+      <p id="eventOutput">No event happened yet.</p>
+    </section>
+
+    <!-- 11. Mouse Events -->
+    <section class="card">
+      <h2>11. Mouse Events</h2>
+      <div id="mouseBox">Move your mouse over me</div>
+    </section>
+
+    <!-- 12. Keyboard Events -->
+    <section class="card">
+      <h2>12. Keyboard Events</h2>
+      <input type="text" id="keyboardInput" placeholder="Type something...">
+      <p id="keyboardOutput">Start typing...</p>
+    </section>
+
+    <!-- 13. Forms -->
+    <section class="card">
+      <h2>13. Form Handling</h2>
+      <form id="studentForm">
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" required>
+
+        <label for="studentEmail">Email</label>
+        <input type="email" id="studentEmail" required>
+
+        <button type="submit">Submit</button>
+      </form>
+      <p id="formOutput"></p>
+    </section>
+
+    <!-- 14. Event Bubbling -->
+    <section class="card">
+      <h2>14. Event Bubbling</h2>
+      <div id="outerBox">
+        Outer Div
+        <button id="innerButton">Inner Button</button>
+      </div>
+      <p id="bubbleOutput"></p>
+    </section>
+
+    <!-- 15. Event Delegation -->
+    <section class="card">
+      <h2>15. Event Delegation</h2>
+      <ul id="delegationList">
+        <li><button>Item 1</button></li>
+        <li><button>Item 2</button></li>
+        <li><button>Item 3</button></li>
+      </ul>
+      <p id="delegationOutput"></p>
+    </section>
+
+    <!-- 16. Mini Project -->
+    <section class="card">
+      <h2>16. Mini Project — Todo List</h2>
+      <p>This combines the DOM concepts covered above.</p>
+      <div class="todo-input">
+        <input type="text" id="todoInput" placeholder="Enter a task...">
+        <button id="todoButton">Add Task</button>
+      </div>
+      <ul id="todoList"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

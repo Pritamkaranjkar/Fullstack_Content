@@ -1,0 +1,179 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+header {
+  padding: 50px 20px;
+  text-align: center;
+  background: #111827;
+  color: #fff;
+}
+
+header h1 {
+  margin: 0 0 10px;
+}
+
+header p {
+  margin: 0;
+  color: #cbd5e1;
+}
+
+main {
+  width: min(1000px, 92%);
+  margin: 40px auto;
+}
+
+.card {
+  margin-bottom: 24px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card h2 {
+  margin: 0 0 16px;
+}
+
+button {
+  margin: 5px 5px 5px 0;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 7px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+input {
+  display: block;
+  width: min(400px, 100%);
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 7px;
+  font-size: 16px;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+#colorBox {
+  margin-bottom: 15px;
+  padding: 30px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.box {
+  padding: 20px;
+  background: #e5e7eb;
+  border-radius: 8px;
+}
+
+.highlight {
+  border: 3px solid #ca8a04;
+  background: #facc15;
+  transform: scale(1.03);
+}
+
+#removeBox {
+  margin-bottom: 15px;
+  padding: 20px;
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+}
+
+#parentBox {
+  padding: 20px;
+  background: #dbeafe;
+  border-radius: 10px;
+}
+
+#childParagraph {
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+#mouseBox {
+  padding: 40px;
+  background: #ddd6fe;
+  border-radius: 10px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+#outerBox {
+  padding: 30px;
+  background: #bfdbfe;
+  border-radius: 10px;
+}
+
+#innerButton {
+  background: #dc2626;
+}
+
+.todo-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-input input {
+  flex: 1;
+  margin: 0;
+}
+
+#todoList {
+  padding: 0;
+  list-style: none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0;
+  padding: 12px;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.completed {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+@media (max-width: 600px) {
+  main {
+    width: 94%;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .todo-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

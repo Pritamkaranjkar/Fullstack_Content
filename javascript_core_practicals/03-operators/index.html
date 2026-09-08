@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 · Operators — JS Core Practicals</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">js_core_practicals</div>
+      <p>21 self-contained exercises covering JavaScript from fundamentals to browser storage.</p>
+    </div>
+    <div class="sidebar-section-label">Explorer</div>
+    <ul class="file-tree">
+      <li><a class="" href="../01-javascript-fundamentals/index.html"><span class="num">01</span>JavaScript Fundamentals</a></li>
+<li><a class="" href="../02-variables-data-types/index.html"><span class="num">02</span>Variables &amp; Data Types</a></li>
+<li><a class="active" href="../03-operators/index.html"><span class="num">03</span>Operators</a></li>
+<li><a class="" href="../04-conditions/index.html"><span class="num">04</span>Conditions</a></li>
+<li><a class="" href="../05-loops/index.html"><span class="num">05</span>Loops</a></li>
+<li><a class="" href="../06-functions/index.html"><span class="num">06</span>Functions</a></li>
+<li><a class="" href="../07-strings/index.html"><span class="num">07</span>Strings</a></li>
+<li><a class="" href="../08-arrays/index.html"><span class="num">08</span>Arrays</a></li>
+<li><a class="" href="../09-objects/index.html"><span class="num">09</span>Objects</a></li>
+<li><a class="" href="../10-scope-hoisting-closures/index.html"><span class="num">10</span>Scope, Hoisting &amp; Closures</a></li>
+<li><a class="" href="../11-dom-manipulation/index.html"><span class="num">11</span>DOM Manipulation</a></li>
+<li><a class="" href="../12-events/index.html"><span class="num">12</span>Events</a></li>
+<li><a class="" href="../13-forms-validation/index.html"><span class="num">13</span>Forms &amp; Validation</a></li>
+<li><a class="" href="../14-modern-javascript/index.html"><span class="num">14</span>Modern JavaScript (ES6+)</a></li>
+<li><a class="" href="../15-asynchronous-javascript/index.html"><span class="num">15</span>Asynchronous JavaScript</a></li>
+<li><a class="" href="../16-fetch-json-api/index.html"><span class="num">16</span>Fetch, JSON &amp; APIs</a></li>
+<li><a class="" href="../17-modules/index.html"><span class="num">17</span>Modules</a></li>
+<li><a class="" href="../18-error-handling/index.html"><span class="num">18</span>Error Handling</a></li>
+<li><a class="" href="../19-javascript-runtime/index.html"><span class="num">19</span>JavaScript Runtime</a></li>
+<li><a class="" href="../20-object-oriented-javascript/index.html"><span class="num">20</span>Object-Oriented JavaScript</a></li>
+<li><a class="" href="../21-browser-storage/index.html"><span class="num">21</span>Browser Storage</a></li>
+    </ul>
+    <div class="sidebar-foot">
+      <div class="progress-label"><span>Progress</span><span>3 / 21</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:14%"></div></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="tabbar">
+      <div class="crumb">javascript_core_practicals<span class="sep">/</span><span class="current">03-operators</span><span class="sep">/</span>index.html</div>
+      <nav class="tab-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../02-variables-data-types/index.html">&larr; Prev</a>
+        <a href="../04-conditions/index.html">Next &rarr;</a>
+      </nav>
+    </div>
+
+    <header class="page-head">
+      <div class="eyebrow">Topic 03 of 21</div>
+      <h1>Operators</h1>
+      <p class="tagline">Arithmetic, comparison, logical and the modern nullish/optional-chaining operators.</p>
+    </header>
+
+    <div class="workspace">
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-notes"></span>NOTES.md</div>
+        <div class="pane-body notes">
+          
+<h2>Arithmetic</h2>
+<pre><code>+  -  *  /  %  **   <span class="tok-com">// ** is exponent, % is remainder</span></code></pre>
+<h2>Comparison</h2>
+<ul>
+  <li><code>==</code> loose equality — coerces types first (avoid)</li>
+  <li><code>===</code> strict equality — no coercion (prefer this)</li>
+  <li><code>&gt; &lt; &gt;= &lt;=</code> — ordering</li>
+</ul>
+<h2>Logical</h2>
+<pre><code>&amp;&amp;  <span class="tok-com">// AND — returns first falsy or last value</span>
+||  <span class="tok-com">// OR  — returns first truthy or last value</span>
+!   <span class="tok-com">// NOT</span></code></pre>
+<h2>Modern operators</h2>
+<pre><code>a ?? b        <span class="tok-com">// nullish coalescing: b only if a is null/undefined</span>
+a?.b?.c       <span class="tok-com">// optional chaining: stop safely if a or b is nullish</span>
+cond ? x : y  <span class="tok-com">// ternary</span></code></pre>
+
+        </div>
+      </section>
+
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-console"></span>console — script.js</div>
+        <div class="controls">
+          
+        <div class="field">
+          <label for="op-a">A</label>
+          <input type="number" id="op-a" value="10">
+        </div>
+        <div class="field">
+          <label for="op-op">Operator</label>
+          <select id="op-op">
+            <option>+</option><option>-</option><option>*</option><option>/</option>
+            <option>%</option><option>**</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="op-b">B</label>
+          <input type="number" id="op-b" value="3">
+        </div>
+        <button class="primary" data-action="calc">Calculate</button>
+        <button data-action="equality">Compare == vs ===</button>
+        <button data-action="nullish">Try ?? and ?.</button>
+
+          <button id="clear-btn">Clear console</button>
+        </div>
+        <div class="console" id="output-log">
+          
+          <p class="console-empty">Run a demo above to see output here.</p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="page-foot">javascript_core_practicals / 03-operators — built with HTML, CSS &amp; vanilla JavaScript</footer>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

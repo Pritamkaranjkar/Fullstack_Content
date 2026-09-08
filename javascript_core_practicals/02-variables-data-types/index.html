@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 · Variables &amp; Data Types — JS Core Practicals</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">js_core_practicals</div>
+      <p>21 self-contained exercises covering JavaScript from fundamentals to browser storage.</p>
+    </div>
+    <div class="sidebar-section-label">Explorer</div>
+    <ul class="file-tree">
+      <li><a class="" href="../01-javascript-fundamentals/index.html"><span class="num">01</span>JavaScript Fundamentals</a></li>
+<li><a class="active" href="../02-variables-data-types/index.html"><span class="num">02</span>Variables &amp; Data Types</a></li>
+<li><a class="" href="../03-operators/index.html"><span class="num">03</span>Operators</a></li>
+<li><a class="" href="../04-conditions/index.html"><span class="num">04</span>Conditions</a></li>
+<li><a class="" href="../05-loops/index.html"><span class="num">05</span>Loops</a></li>
+<li><a class="" href="../06-functions/index.html"><span class="num">06</span>Functions</a></li>
+<li><a class="" href="../07-strings/index.html"><span class="num">07</span>Strings</a></li>
+<li><a class="" href="../08-arrays/index.html"><span class="num">08</span>Arrays</a></li>
+<li><a class="" href="../09-objects/index.html"><span class="num">09</span>Objects</a></li>
+<li><a class="" href="../10-scope-hoisting-closures/index.html"><span class="num">10</span>Scope, Hoisting &amp; Closures</a></li>
+<li><a class="" href="../11-dom-manipulation/index.html"><span class="num">11</span>DOM Manipulation</a></li>
+<li><a class="" href="../12-events/index.html"><span class="num">12</span>Events</a></li>
+<li><a class="" href="../13-forms-validation/index.html"><span class="num">13</span>Forms &amp; Validation</a></li>
+<li><a class="" href="../14-modern-javascript/index.html"><span class="num">14</span>Modern JavaScript (ES6+)</a></li>
+<li><a class="" href="../15-asynchronous-javascript/index.html"><span class="num">15</span>Asynchronous JavaScript</a></li>
+<li><a class="" href="../16-fetch-json-api/index.html"><span class="num">16</span>Fetch, JSON &amp; APIs</a></li>
+<li><a class="" href="../17-modules/index.html"><span class="num">17</span>Modules</a></li>
+<li><a class="" href="../18-error-handling/index.html"><span class="num">18</span>Error Handling</a></li>
+<li><a class="" href="../19-javascript-runtime/index.html"><span class="num">19</span>JavaScript Runtime</a></li>
+<li><a class="" href="../20-object-oriented-javascript/index.html"><span class="num">20</span>Object-Oriented JavaScript</a></li>
+<li><a class="" href="../21-browser-storage/index.html"><span class="num">21</span>Browser Storage</a></li>
+    </ul>
+    <div class="sidebar-foot">
+      <div class="progress-label"><span>Progress</span><span>2 / 21</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:10%"></div></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="tabbar">
+      <div class="crumb">javascript_core_practicals<span class="sep">/</span><span class="current">02-variables-data-types</span><span class="sep">/</span>index.html</div>
+      <nav class="tab-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../01-javascript-fundamentals/index.html">&larr; Prev</a>
+        <a href="../03-operators/index.html">Next &rarr;</a>
+      </nav>
+    </div>
+
+    <header class="page-head">
+      <div class="eyebrow">Topic 02 of 21</div>
+      <h1>Variables &amp; Data Types</h1>
+      <p class="tagline">Declaring storage with var, let and const, and the eight data types JavaScript values can hold.</p>
+    </header>
+
+    <div class="workspace">
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-notes"></span>NOTES.md</div>
+        <div class="pane-body notes">
+          
+<h2>Declaring variables</h2>
+<pre><code><span class="tok-kw">var</span> a = <span class="tok-num">1</span>;   <span class="tok-com">// function-scoped, hoisted, avoid in modern code</span>
+<span class="tok-kw">let</span> b = <span class="tok-num">2</span>;   <span class="tok-com">// block-scoped, reassignable</span>
+<span class="tok-kw">const</span> c = <span class="tok-num">3</span>; <span class="tok-com">// block-scoped, cannot be reassigned</span></code></pre>
+<p><code>const</code> prevents reassignment of the binding, not mutation — a <code>const</code> array or object can still
+have its contents changed.</p>
+<h2>Primitive types</h2>
+<ul>
+  <li><strong>string</strong> — <code>"hi"</code>, <code>'hi'</code>, <code>`hi`</code></li>
+  <li><strong>number</strong> — <code>42</code>, <code>3.14</code>, <code>NaN</code>, <code>Infinity</code></li>
+  <li><strong>bigint</strong> — <code>9007199254740993n</code>, for integers beyond safe number range</li>
+  <li><strong>boolean</strong> — <code>true</code> / <code>false</code></li>
+  <li><strong>undefined</strong> — declared, not yet assigned</li>
+  <li><strong>null</strong> — deliberate "no value"</li>
+  <li><strong>symbol</strong> — unique, mostly-hidden identifiers</li>
+</ul>
+<h2>Reference type</h2>
+<p><strong>object</strong> (including arrays and functions) — stored by reference, not by value.</p>
+<h2>Type coercion</h2>
+<pre><code><span class="tok-str">"5"</span> + <span class="tok-num">1</span>   <span class="tok-com">// "51"  — number coerced to string</span>
+<span class="tok-str">"5"</span> - <span class="tok-num">1</span>   <span class="tok-com">// 4    — string coerced to number</span></code></pre>
+
+        </div>
+      </section>
+
+      <section class="pane">
+        <div class="pane-head"><span class="dot dot-console"></span>console — script.js</div>
+        <div class="controls">
+          
+        <div class="field">
+          <label for="v-value">Value to inspect</label>
+          <input type="text" id="v-value" value="42">
+        </div>
+        <button class="primary" data-action="inspect">Inspect type</button>
+        <button data-action="const-demo">Try reassigning a const</button>
+        <button data-action="coercion">Show coercion examples</button>
+
+          <button id="clear-btn">Clear console</button>
+        </div>
+        <div class="console" id="output-log">
+          
+          <p class="console-empty">Run a demo above to see output here.</p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="page-foot">javascript_core_practicals / 02-variables-data-types — built with HTML, CSS &amp; vanilla JavaScript</footer>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
